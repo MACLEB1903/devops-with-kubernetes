@@ -1,0 +1,37 @@
+# 1.1 Getting started
+
+This project is for [Exercise 1.1: Getting Started](courses.mooc.fi/org/uh-cs/courses/devops-with-kubernetes-2026/chapter-2/first-deploy) of the University of Helsinki's [DevOps with Kubernetes](https://courses.mooc.fi/org/uh-cs/courses/devops-with-kubernetes-2026). It aims to create an application that generates a random string on startup, stores this string in memory, and outputs it every 5 seconds with a timestamp as follows:
+
+```
+2020-03-30T12:15:17.705Z: 8523ecb1-c716-4cb6-a044-b9e83bb98e43
+2020-03-30T12:15:22.705Z: 8523ecb1-c716-4cb6-a044-b9e83bb98e43
+```
+
+### How to run:
+
+To run this application, execute the following commands in your preferred terminal or command-line interface.
+
+```bash
+# Build the Docker image.
+docker build -t log-output .
+```
+
+```bash
+# Import the image to the local k3d cluster.
+k3d image import log-output -c <cluster-name>
+```
+
+```bash
+# Deploy the application.
+kubectl apply -f deployment.yaml
+```
+
+```bash
+# Get the pod name.
+kubectl get pods
+```
+
+```bash
+# Follow the logs from the pod.
+kubectl logs -f <pod-name>
+```
