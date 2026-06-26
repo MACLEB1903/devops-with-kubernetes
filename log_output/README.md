@@ -35,3 +35,16 @@ kubectl get pods
 # Follow the logs from the pod.
 kubectl logs -f <pod-name>
 ```
+
+<br>
+
+# 1.3 Declarative approach
+
+This project is for [Exercise 1.3: Declarative approach](courses.mooc.fi/org/uh-cs/courses/devops-with-kubernetes-2026/chapter-2/first-deploy) of the University of Helsinki's [DevOps with Kubernetes](https://courses.mooc.fi/org/uh-cs/courses/devops-with-kubernetes-2026). In your "Log output" application, create a folder for manifests and move your deployment into a declarative file.
+
+### How to run:
+
+```bash
+# Deploy the application.
+kubectl apply -f manifests/deployment.yaml
+```
