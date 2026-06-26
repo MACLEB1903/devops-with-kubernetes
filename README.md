@@ -7,3 +7,4 @@ This directory is a collection of all the projects submitted for the course [Dev
 ### 1. First Deploy
 
 - [1.1](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/log_output): Getting started
+- [1.2](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/todo_app): The project, step 1
