@@ -6,6 +6,7 @@ This directory is a collection of all the projects submitted for the course [Dev
 
 ### 1. First Deploy
 
-- [1.1](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/log_output): Getting started
-- [1.2](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/todo_app): The project, step 1
-- [1.3](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/log_output): Declarative approach
+- [1.1](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/log_output): Getting Started
+- [1.2](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/todo_app): The project, Step 1
+- [1.3](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/log_output): Declarative Approach
+- [1.4](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/todo_app): The project, Step 2
