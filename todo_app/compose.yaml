@@ -1,0 +1,9 @@
+services:
+  todo:
+    build: ./backend
+    container_name: todo
+    image: todo
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000

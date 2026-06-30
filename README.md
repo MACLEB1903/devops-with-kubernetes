@@ -10,3 +10,4 @@ This directory is a collection of all the projects submitted for the course [Dev
 - [1.2](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/todo_app): The project, Step 1
 - [1.3](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/log_output): Declarative Approach
 - [1.4](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/todo_app): The project, Step 2
+- [1.5](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/todo_app): The project, Step 3

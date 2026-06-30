@@ -18,3 +18,8 @@ spec:
         - name: todo
           image: todo
           imagePullPolicy: IfNotPresent
+          env:
+            - name: PORT
+              value: "3000"
+          ports:
+            - containerPort: 3000

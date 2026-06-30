@@ -45,3 +45,27 @@ This project is for [Exercise 1.4: The project, Step 2](courses.mooc.fi/org/uh-c
 # Deploy the application.
 kubectl apply -f manifests/deployment.yaml
 ```
+
+<br>
+
+# 1.5 The project, Step 3
+
+In this project, configure the application to return a webpage (or SPA) via a GET request at the / URL. Use environment variables if needed, and verify cluster access using kubectl port-forward in your browser.
+
+### How to run:
+
+```bash
+# Build the image using Compose, then import it into the cluster.
+docker compose up --build
+k3d image import todo -c <cluster-name>
+```
+
+```bash
+# Deploy the application.
+kubectl apply -f manifests/deployment.yaml
+```
+
+```bash
+# Use port-forwarding to access the application.
+kubectl port-forward POD_NAME 3000:3000
+```
