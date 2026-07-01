@@ -69,3 +69,14 @@ kubectl apply -f manifests/deployment.yaml
 # Use port-forwarding to access the application.
 kubectl port-forward POD_NAME 3000:3000
 ```
+
+<br>
+
+# 1.6. The project, Step 4
+
+Instructions: Use a NodePort Service to enable access to the project.
+
+```bash
+# Deploy the application.
+kubectl apply -f manifests/service.yaml
+```
