@@ -48,3 +48,32 @@ This project is for [Exercise 1.3: Declarative approach](courses.mooc.fi/org/uh-
 # Deploy the application.
 kubectl apply -f manifests/deployment.yaml
 ```
+
+<br>
+
+# 1.7 External access with Ingress
+
+Add an endpoint to request the current status (timestamp and the random string) and an Ingress so that you can access it with a browser.
+
+### How to run:
+
+```bash
+# Expose the cluster load balancer port.
+k3d cluster edit <cluster-name> --port-add "3000:80@loadbalancer"
+```
+
+```bash
+# Build the image using Compose, then import it into the cluster.
+docker compose up --build
+k3d image import todo -c <cluster-name>
+```
+
+```bash
+# Deploy the Kubernetes manifests.
+kubectl apply -f manifests/
+```
+
+```
+# Open the application in your browser.
+http://localhost:3000
+```

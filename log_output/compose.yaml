@@ -1,0 +1,9 @@
+services:
+  log_output:
+    build: .
+    container_name: log-output-container
+    image: log-output
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
