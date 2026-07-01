@@ -41,6 +41,8 @@ This project is for [Exercise 1.4: The project, Step 2](courses.mooc.fi/org/uh-c
 
 ### How to run:
 
+To run this application, execute the following commands in your preferred terminal or command-line interface.
+
 ```bash
 # Deploy the application.
 kubectl apply -f manifests/deployment.yaml
@@ -53,6 +55,8 @@ kubectl apply -f manifests/deployment.yaml
 In this project, configure the application to return a webpage (or SPA) via a GET request at the / URL. Use environment variables if needed, and verify cluster access using kubectl port-forward in your browser.
 
 ### How to run:
+
+To run this application, execute the following commands in your preferred terminal or command-line interface.
 
 ```bash
 # Build the image using Compose, then import it into the cluster.
@@ -76,7 +80,41 @@ kubectl port-forward POD_NAME 3000:3000
 
 Instructions: Use a NodePort Service to enable access to the project.
 
+### How to run:
+
+To run this application, execute the following commands in your preferred terminal or command-line interface.
+
 ```bash
 # Deploy the application.
 kubectl apply -f manifests/service.yaml
+```
+
+# 1.8 The project, Step 5
+
+Switch to using Ingress instead of NodePort to access the project. You can delete the Ingress of the "Log output" application so they don't interfere with this exercise. We'll look more into paths and routing in the next exercise, and at that point, you can configure the project to run with the "Log output" application side by side.
+
+### How to run:
+
+To run this application, execute the following commands in your preferred terminal or command-line interface.
+
+```bash
+# Expose the cluster load balancer port.
+k3d cluster edit <cluster-name> --port-add "8081:80@loadbalancer"
+```
+
+```bash
+# Build the image using Compose, then import it into the cluster.
+docker compose up --build
+k3d image import todo -c <cluster-name>
+```
+
+```bash
+# Deploy the Kubernetes manifests.
+kubectl apply -f manifests/
+```
+
+```
+# Open the application in your browser.
+# You should see "This app is built with ClusterIP and Ingress."
+http://localhost:8081
 ```

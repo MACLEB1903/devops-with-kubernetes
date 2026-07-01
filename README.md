@@ -13,3 +13,4 @@ This directory is a collection of all the projects submitted for the course [Dev
 - [1.5](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/todo_app): The project, Step 3
 - [1.6](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/todo_app): The project, Step 4
 - [1.7](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/log_output): External access with Ingress
+- [1.8](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/todo_app): The project, Step 5

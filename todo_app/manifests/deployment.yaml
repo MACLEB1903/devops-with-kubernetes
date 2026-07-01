@@ -15,7 +15,7 @@ spec:
         app: todo
     spec:
       containers:
-        - name: todo
+        - name: todo-container
           image: todo
           imagePullPolicy: IfNotPresent
           env:

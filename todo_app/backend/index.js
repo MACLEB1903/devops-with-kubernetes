@@ -8,5 +8,5 @@ app.listen(PORT, () => {
 });
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("This app is built with ClusterIP and Ingress.");
 });
