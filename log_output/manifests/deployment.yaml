@@ -14,12 +14,35 @@ spec:
       labels:
         app: log-output
     spec:
+      volumes:
+        - name: shared-logs
+          emptyDir: {}
+
       containers:
-        - name: log-output-container
-          image: log-output
+        - name: log-generator-container
+          image: log-generator
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: FILES_DIR
+              value: "/usr/src/app/files"
+            - name: FILE_NAME
+              value: "log.txt"
+          volumeMounts:
+            - name: shared-logs
+              mountPath: /usr/src/app/files
+
+        - name: log-reader-container
+          image: log-reader
           imagePullPolicy: IfNotPresent
           env:
             - name: PORT
               value: "3000"
+            - name: FILES_DIR
+              value: "/usr/src/app/files"
+            - name: FILE_NAME
+              value: "log.txt"
           ports:
             - containerPort: 3000
+          volumeMounts:
+            - name: shared-logs
+              mountPath: /usr/src/app/files
