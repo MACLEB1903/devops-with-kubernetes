@@ -3,24 +3,8 @@ services:
     build: ./generator
     container_name: log-generator-container
     image: log-generator
-    environment:
-      FILES_DIR: /usr/src/app/files
-      FILE_NAME: log.txt
-    volumes:
-      - shared-logs:/usr/src/app/files
 
   log_reader:
     build: ./reader
     container_name: log-reader-container
     image: log-reader
-    ports:
-      - "3000:3000"
-    environment:
-      PORT: 3000
-      FILES_DIR: /usr/src/app/files
-      FILE_NAME: log.txt
-    volumes:
-      - shared-logs:/usr/src/app/files
-
-volumes:
-  shared-logs:

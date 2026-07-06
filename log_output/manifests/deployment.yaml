@@ -15,8 +15,9 @@ spec:
         app: log-output
     spec:
       volumes:
-        - name: shared-logs
-          emptyDir: {}
+        - name: shared-volumes
+          persistentVolumeClaim:
+            claimName: log-output-pvclaim
 
       containers:
         - name: log-generator-container
@@ -28,7 +29,7 @@ spec:
             - name: FILE_NAME
               value: "log.txt"
           volumeMounts:
-            - name: shared-logs
+            - name: shared-volumes
               mountPath: /usr/src/app/files
 
         - name: log-reader-container
@@ -39,10 +40,12 @@ spec:
               value: "3000"
             - name: FILES_DIR
               value: "/usr/src/app/files"
-            - name: FILE_NAME
+            - name: GENERATOR_FILE_NAME
               value: "log.txt"
+            - name: PINGPONG_FILE_NAME
+              value: "ping.txt"
           ports:
             - containerPort: 3000
           volumeMounts:
-            - name: shared-logs
+            - name: shared-volumes
               mountPath: /usr/src/app/files

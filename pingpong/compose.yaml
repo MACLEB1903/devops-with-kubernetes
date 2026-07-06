@@ -3,7 +3,3 @@ services:
     build: .
     container_name: pingpong-container
     image: pingpong
-    ports:
-      - "3000:3000"
-    environment:
-      - PORT=3000
