@@ -1,14 +1,15 @@
+# Change directoty to devops-with-kubernetes
 cd && cd devops-with-kubernetes
 
-# Build the images.
-docker compose -f log_output/compose.yaml up --build
-docker compose -f pingpong/compose.yaml up --build
+# Delete previous existing manifests
+kubectl delete -f todo_app/manifests/
 
-# Import the images to the k3d cluster.
-k3d image import log-generator -c <cluster-name>
-k3d image import log-reader -c <cluster-name>
-k3d image import pingpong -c <cluster-name>
+# Build the images and import the the k3d cluster
+docker compose -f todo_app/compose.yaml build
 
-# Apply the k8s manifests.
-kubectl apply -f log_output/manifests
-kubectl apply -f pingpong/manifests
+k3d image import todo-api:latest -c todo-app
+k3d image import todo-fetcher:latest -c todo-app
+k3d image import todo-frontend:latest -c todo-app
+
+# Apple the manifests
+kubectl apply -f todo_app/manifests/

@@ -118,3 +118,48 @@ kubectl apply -f manifests/
 # You should see "This app is built with ClusterIP and Ingress."
 http://localhost:8081
 ```
+
+<br>
+
+# 1.12. The project, Step 6
+
+To enhance the project, an hourly random image from Lorem Picsum (e.g., https://picsum.photos/1200) will be added. The image should be displayed for 10 minutes, during which it can be revisited once before a new image is shown. To avoid frequent API calls, the image should be cached in a persistent volume, ensuring accessibility even if the application crashes or the container shuts down. Testing this functionality will involve shutting down the container to observe the behavior.
+
+### How to run:
+
+To run this application, execute the following commands in your preferred terminal or command-line interface.
+
+```bash
+# Expose the cluster load balancer port.
+k3d cluster edit <cluster-name> --port-add "3000:80@loadbalancer"
+```
+
+```bash
+# Run the script to build docker images and run on the k8s cluster.
+# Note: Change the <cluster-name> found in ./script.sh file.
+./script.sh
+```
+
+```bash
+# Open the application in your browser and see the image.
+http://localhost:3000
+```
+
+### How to test:
+
+To test this application, execute the following commands in your preferred terminal or CLI.
+
+```bash
+# Delete the current deployment.
+kubectl delete -f todo_app/manifests/deployment.yaml
+```
+
+```bash
+# Re-apply the manifests.
+kubectl apply -f todo_app/manifests/deployment.yaml
+```
+
+```bash
+# You can the see same image as before.
+http://localhost:3000
+```
