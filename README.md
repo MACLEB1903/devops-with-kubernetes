@@ -17,4 +17,4 @@ This directory is a collection of all the projects submitted for the course [Dev
 - [1.9](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/pingpong): More services
 - [1.10](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/log_output): Even more services
 - [1.11](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/log_output): Persisting data
-- [1.8](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/todo_app): The project, Step 6
+- [1.12](https://github.com/MACLEB1903/devops-with-kubernetes/tree/main/todo_app): The project, Step 6
