@@ -121,7 +121,7 @@ http://localhost:8081
 
 <br>
 
-# 1.12. The project, Step 6
+# 1.12 The project, Step 6
 
 To enhance the project, an hourly random image from Lorem Picsum (e.g., https://picsum.photos/1200) will be added. The image should be displayed for 10 minutes, during which it can be revisited once before a new image is shown. To avoid frequent API calls, the image should be cached in a persistent volume, ensuring accessibility even if the application crashes or the container shuts down. Testing this functionality will involve shutting down the container to observe the behavior.
 
@@ -163,3 +163,9 @@ kubectl apply -f todo_app/manifests/deployment.yaml
 # You can the see same image as before.
 http://localhost:3000
 ```
+
+# 1.13 The project, Step7
+
+To enhance the project, incorporate a todo app function by adding an input field limited to 140 characters, a send button (which will not yet send todos), and a display of existing todos with some pre-defined entries.
+
+**NOTE: TO RUN AND TEST THIS PROJECT (1.13), USE THE SAME COMMANDS AS FOR PROJECT 1.12.**

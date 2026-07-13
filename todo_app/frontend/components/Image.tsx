@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+// @ts-ignore
 const VITE_FETCH_URL = import.meta.env.VITE_FETCH_URL;
 
 export default function ImageWrapper() {
@@ -32,7 +33,7 @@ export default function ImageWrapper() {
   }, []);
 
   return (
-    <section className="w-full h-screen absolute z-99">
+    <section className="w-full h-screen absolute z-99 blur-xs pointer-events-none">
       {imageUrl && (
         <img
           className="h-full w-full object-cover"
