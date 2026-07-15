@@ -1,28 +1,39 @@
-# 1.9 More services
+# 2.1 Connecting pods
 
-This project is for [1.9 More services](courses.mooc.fi/org/uh-cs/courses/devops-with-kubernetes-2026/chapter-2/first-deploy) of the University of Helsinki's [DevOps with Kubernetes](https://courses.mooc.fi/org/uh-cs/courses/devops-with-kubernetes-2026). It aims to develop a second application that simply responds with "pong 0" to a GET request and increases a counter (the 0) so that you can see how many requests have been sent. The counter should be in memory so it may reset at some point. Create a new deployment for it and have it share ingress with "Log output" application. Route requests directed '/pingpong' to it.
+Connect the Log output application and the Ping pong application using an HTTP GET endpoint to share the number of pongs instead of using file sharing. Temporarily remove the volume between the two applications.
+
+The response of the `HTTP GET` to Log output will stay the same:
+
+```
+2020-03-30T12:15:17.705Z: 8523ecb1-c716-4cb6-a044-b9e83bb98e43
+2020-03-30T12:15:22.705Z: 8523ecb1-c716-4cb6-a044-b9e83bb98e43
+```
 
 ### How to run:
 
-To run this application, execute the following commands in your preferred terminal or command-line interface.
+To run this application, execute the following commands in your command-line.
 
 ```bash
-# Build the Docker image.
-docker compose up --build
-```
-
-```bash
-# Import the image into the same cluster used by the log-output app.
-k3d image import pingpong -c <cluster-name>
+# Expose the cluster load balancer port.
+k3d cluster edit <cluster-name> --port-add "3000:80@loadbalancer"
 ```
 
 ```bash
-# Deploy the application.
-kubectl apply -f manifests/
+# Run the script.
+./script.sh
 ```
 
-```
+### How to test:
+
+To test this application, execute the following commands in your command-line.
+
+```bash
 # Open the application in your browser.
-# Note: the log-output cluster must expose 3000:80@loadbalancer.
-http://localhost:3000/pingpong
+curl http://localhost:3002/
+```
+
+```bash
+# Expected ouput should be similar to:
+2026-07-15T01:45:49.535Z: 8a125499-e952-470b-b9f7-b9d86a51669c
+Pings: 1
 ```

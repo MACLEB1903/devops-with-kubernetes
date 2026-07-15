@@ -1,6 +1,8 @@
-# 1.1 Getting started
+# 2.1 Connecting pods
 
-This project is for [Exercise 1.1: Getting Started](https://courses.mooc.fi/org/uh-cs/courses/devops-with-kubernetes-2026/chapter-2/first-deploy) of the University of Helsinki's [DevOps with Kubernetes](https://courses.mooc.fi/org/uh-cs/courses/devops-with-kubernetes-2026). It aims to create an application that generates a random string on startup, stores this string in memory, and outputs it every 5 seconds with a timestamp as follows:
+Connect the Log output application and the Ping pong application using an HTTP GET endpoint to share the number of pongs instead of using file sharing. Temporarily remove the volume between the two applications.
+
+The response of the `HTTP GET` to Log output will stay the same:
 
 ```
 2020-03-30T12:15:17.705Z: 8523ecb1-c716-4cb6-a044-b9e83bb98e43
@@ -9,130 +11,7 @@ This project is for [Exercise 1.1: Getting Started](https://courses.mooc.fi/org/
 
 ### How to run:
 
-To run this application, execute the following commands in your preferred terminal or command-line interface.
-
-```bash
-# Build the Docker image.
-docker build -t log-output .
-```
-
-```bash
-# Import the image to the local k3d cluster.
-k3d image import log-output -c <cluster-name>
-```
-
-```bash
-# Deploy the application.
-kubectl apply -f deployment.yaml
-```
-
-```bash
-# Get the pod name.
-kubectl get pods
-```
-
-```bash
-# Follow the logs from the pod.
-kubectl logs -f <pod-name>
-```
-
-<br>
-
-# 1.3 Declarative approach
-
-This project is for [Exercise 1.3: Declarative approach](https://courses.mooc.fi/org/uh-cs/courses/devops-with-kubernetes-2026/chapter-2/first-deploy) of the University of Helsinki's [DevOps with Kubernetes](https://courses.mooc.fi/org/uh-cs/courses/devops-with-kubernetes-2026). In your "Log output" application, create a folder for manifests and move your deployment into a declarative file.
-
-### How to run:
-
-To run this application, execute the following commands in your preferred terminal or command-line interface.
-
-```bash
-# Deploy the application.
-kubectl apply -f manifests/deployment.yaml
-```
-
-<br>
-
-# [1.7 External access with Ingress]
-
-Add an endpoint to request the current status (timestamp and the random string) and an Ingress so that you can access it with a browser.
-
-### How to run:
-
-To run this application, execute the following commands in your preferred terminal or command-line interface.
-
-```bash
-# Expose the cluster load balancer port.
-k3d cluster edit <cluster-name> --port-add "3000:80@loadbalancer"
-```
-
-```bash
-# Build the image using Compose, then import it into the cluster.
-docker compose up --build
-k3d image import log-output -c <cluster-name>
-```
-
-```bash
-# Deploy the Kubernetes manifests.
-kubectl apply -f manifests/
-```
-
-```
-# Open the application in your browser.
-http://localhost:3000
-```
-
-<br>
-
-# 1.10 Even more services
-
-Split the "Log output" application into two different containers within a single pod:
-
-- One generates a random string on startup and writes a line with the random string and timestamp every 5 seconds into a file.
-- The other reads that file and provides the content in the HTTP GET endpoint for the user to see.
-
-### How to run:
-
-To run this application, execute the following commands in your preferred terminal or command-line interface.
-
-```bash
-# Expose the cluster load balancer port.
-k3d cluster edit <cluster-name> --port-add "3000:80@loadbalancer"
-```
-
-```bash
-# Build the image using Compose, then import it into the cluster.
-docker compose up --build
-k3d image import log-generator -c <cluster-name>
-k3d image import log-reader -c <cluster-name>
-```
-
-```bash
-# Deploy the Kubernetes manifests.
-kubectl apply -f manifests/
-```
-
-```
-# Open the application in your browser.
-http://localhost:3000
-```
-
-<br>
-
-# 1.11 Persisting data
-
-Let's share data between "Ping-pong" and "Log output" applications using persistent volumes. Create both a PersistentVolume and PersistentVolumeClaim and alter the Deployment to utilize it. As PersistentVolumes are often maintained by cluster administrators rather than developers and those are not application specific you should keep the definition for those separated, perhaps in own folder.
-
-Save the number of requests to the "Ping-pong" application into a file in the volume and output it with the timestamp and the random string when sending a request to our "Log output" application. In the end, the two pods should share a persistent volume between the two applications. So the browser should display the following when accessing the "Log output" application:
-
-```
-2020-03-30T12:15:17.705Z: 8523ecb1-c716-4cb6-a044-b9e83bb98e43.
-Ping / Pongs: 3
-```
-
-### How to run:
-
-To run this application, execute the following commands in your preferred terminal or command-line interface.
+To run this application, execute the following commands in your command-line.
 
 ```bash
 # Expose the cluster load balancer port.
@@ -144,8 +23,17 @@ k3d cluster edit <cluster-name> --port-add "3000:80@loadbalancer"
 ./script.sh
 ```
 
-```
+### How to test:
+
+To test this application, execute the following commands in your command-line.
+
+```bash
 # Open the application in your browser.
-http://localhost:3000
-http://localhost:3000/pingpong
+curl http://localhost:3002/
+```
+
+```bash
+# Expected ouput should be similar to:
+2026-07-15T01:45:49.535Z: 8a125499-e952-470b-b9f7-b9d86a51669c
+Pings: 1
 ```

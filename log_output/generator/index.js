@@ -1,20 +1,16 @@
 import fs from "fs";
 import path from "path";
+import express from "express";
 
-const FILES_DIR = process.env.FILES_DIR;
-const FILE_NAME = process.env.FILE_NAME;
+const PORT = process.env.PORT;
+const app = express();
 
-const filePath = path.join(FILES_DIR, FILE_NAME);
+const id = crypto.randomUUID();
+const date = new Date().toISOString();
+const content = `${date}: ${id}`;
 
-setInterval(() => {
-  const id = crypto.randomUUID();
-  const date = new Date().toISOString();
+app.get("/", (req, res) => {
+  res.json(content);
+});
 
-  const content = `${date}: ${id}`;
-
-  fs.writeFile(filePath, content, "utf-8", (err) => {
-    if (err) {
-      console.error(err);
-    }
-  });
-}, 5000);
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
