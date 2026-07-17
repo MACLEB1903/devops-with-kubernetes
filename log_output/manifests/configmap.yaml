@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: log-output-configmap
+  namespace: exercises
+data:
+  information.txt: |
+    This file is from information.txt build with configmap.
+  INFO_CONFIG_PATH: /usr/src/app/files/information.txt
+  MESSAGE: hello world from configmap

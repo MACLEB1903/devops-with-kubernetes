@@ -5,12 +5,12 @@ import express from "express";
 const PORT = process.env.PORT;
 const app = express();
 
-const id = crypto.randomUUID();
+const hash = crypto.randomUUID();
 const date = new Date().toISOString();
-const content = `${date}: ${id}`;
+const dateAndHash = `${date}: ${hash}`;
 
 app.get("/", (req, res) => {
-  res.json(content);
+  res.json(dateAndHash);
 });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

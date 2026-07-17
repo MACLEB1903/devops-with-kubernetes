@@ -1,15 +1,21 @@
-# 2.3 Keep them separated
+# 2.5 Documentation and ConfigMap
 
-Create a namespace called exercises for the applications in the exercises. Move the "Log output" and "Ping-pong" to that namespace and use that in the future for all of the exercises, except the project that shall have a separate namespace. You can follow the course material using the default namespace.
+Use the official Kubernetes documentation to create a ConfigMap for the "Log output" application. Define one file named information. txt and one environment variable MESSAGE. Map the file as a volume, set the variable, and print the content along with the usual output:
+
+```
+file content: this text is from file
+env variable: MESSAGE=hello world
+2026-05-18T12:15:17.705Z: 8523ecb1-c716-4cb6-a044-b9e83bb98e43.
+Ping / Pongs: 3
+```
 
 ### How to run:
-
-**NOTE: This exercise focuses on creating namespaces. To build the application, first follow the installation guide from exercise [2.1 Connecting Pods](https://github.com/MACLEB1903/devops-with-kubernetes/tree/2.1/log_output).**
 
 To run this application, execute the following commands in your command-line.
 
 ```bash
 # Run the script.
+# Remember to update `<cluster-name>` on the script.sh.
 ./script.sh
 ```
 
@@ -18,18 +24,20 @@ To run this application, execute the following commands in your command-line.
 To test this application, execute the following commands in your command-line.
 
 ```bash
-# Set the current context to use the exercises namespace.
-kubectl config set-context --current --namespace=exercises
+# Expose the cluster load balancer port.
+k3d cluster edit <cluster-name> --port-add "3000:80@loadbalancer"
 ```
 
 ```bash
 # List the Pods in the exercises namespace.
-kubectl get pods
+http://localhost:3000/
+http://localhost:3000/pingpong
 ```
 
 ```bash
-# Expected terminal output, similar to the following:
-NAME                                     READY   STATUS    RESTARTS   AGE
-log-output-deployment-xxxxxxxx-xxxxx     2/2     Running   0          49s
-pingpong-deployment-xxxxxxxxxx-xxxxx     1/1     Running   0          49s
+# Expected browser output, similar to the following:
+file content: This file is from information.txt build with configmap.
+env variable: MESSAGE=hello world from configmap
+2026-07-17T20:11:40.837Z: 014deb58-efa5-46db-946f-54d736fb0c49
+Pings: 2
 ```

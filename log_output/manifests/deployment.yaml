@@ -31,5 +31,28 @@ spec:
           env:
             - name: PORT
               value: "3000"
+            - name: GENERATOR_URL
+              value: "http://localhost:3001/"
+            - name: PINGPONG_URL
+              value: "http://pingpong-svc:2345/pingpong"
+            - name: MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: log-output-configmap
+                  key: MESSAGE
+            - name: INFO_CONFIG_PATH
+              valueFrom:
+                configMapKeyRef:
+                  key: INFO_CONFIG_PATH
+                  name: log-output-configmap
+          volumeMounts:
+            - name: config-volume
+              mountPath: /usr/src/app/files
+              readOnly: true
           ports:
             - containerPort: 3000
+
+      volumes:
+        - name: config-volume
+          configMap:
+            name: log-output-configmap
