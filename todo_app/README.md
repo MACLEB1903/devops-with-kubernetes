@@ -1,4 +1,4 @@
-# 2.1 Connecting pods
+# 2.2 The project, Step 8
 
 In the project continuation, a new service named todo-backend is to be created for managing todo items, featuring a `GET /todos` endpoint for fetching todos and a `POST /todos` endpoint for creating them. Initially, todos will be stored in memory, with plans for database integration later.
 
