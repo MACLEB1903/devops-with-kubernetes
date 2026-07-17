@@ -1,15 +1,12 @@
-# 2.2 The project, Step 8
+# 2.4 The Project, Step 9
 
-In the project continuation, a new service named todo-backend is to be created for managing todo items, featuring a `GET /todos` endpoint for fetching todos and a `POST /todos` endpoint for creating them. Initially, todos will be stored in memory, with plans for database integration later.
+Create a namespace called project for the project and move everything related to the project to that namespace. Use the new namespace in the future for all the project related exercises.
 
 ### How to run:
 
-To run this application, execute the following commands in your command-line.
+**NOTE: This exercise focuses on creating namespaces. To build the application, first follow the installation guide from exercise [2.2 The project, Step 8](https://github.com/MACLEB1903/devops-with-kubernetes/tree/2.2/todo_app).**
 
-```bash
-# Expose the cluster load balancer port.
-k3d cluster edit <cluster-name> --port-add "3000:80@loadbalancer"
-```
+To run this application, execute the following commands in your command-line.
 
 ```bash
 # Run the script.
@@ -21,11 +18,18 @@ k3d cluster edit <cluster-name> --port-add "3000:80@loadbalancer"
 To test this application, execute the following commands in your command-line.
 
 ```bash
-# Open the application in your browser.
-http://localhost:3000/
+# Set the current context to use the exercises namespace.
+kubectl config set-context --current --namespace=project
 ```
 
 ```bash
-# To fetch todos.
-http://localhost:3000/todos
+# List the Pods in the exercises namespace.
+kubectl get pods
+```
+
+```bash
+# Expected terminal output, similar to the following:
+NAME                                     READY   STATUS    RESTARTS   AGE
+todo-backend-deployment-xxxxxxxx-xxxxx   2/2     Running   0          49s
+todo-frontend-deploymen-xxxxxxxxxx-xxxxx  /1     Running   0          49s
 ```

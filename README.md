@@ -37,3 +37,4 @@ This directory is a collection of all the projects submitted for the course [Dev
 ### 2. Organizing A Cluster
 
 - [2.3](https://github.com/MACLEB1903/devops-with-kubernetes/tree/2.3): Keep Them Separated
+- [2.4](https://github.com/MACLEB1903/devops-with-kubernetes/tree/2.4): The Project, Step 9
