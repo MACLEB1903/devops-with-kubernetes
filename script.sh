@@ -1,25 +1,12 @@
 #!/usr/bin/env bash
 
-# Exit when changing directory fails.
-cd ~/devops-with-kubernetes
+# List the namespaces in the cluster.
+kubectl get namespaces
 
-# Delete existing images.
-docker rmi image-worker
-docker rmi image-backend
-docker rmi todo-frontend
-docker rmi todo-backend
+# Delete all the resources tied to namespace "exercises" if existent.
+kubectl delete -f log_output/manifests/namespace.yaml
 
-# Delete previously applied manifests.
-kubectl delete -f todo_app/manifests
-
-# Build the images.
-docker compose -f todo_app/compose.yaml build
-
-# Import the images into the k3d cluster.
-k3d image import image-worker -c <cluster-name>
-k3d image import image-backend -c <cluster-name>
-k3d image import todo-frontend -c <cluster-name>
-k3d image import todo-backend -c <cluster-name>
-
-# Apply the manifests.
-kubectl apply -f todo_app/manifests/
+# Apply the updated manifests, including namespace.yaml.
+kubectl apply -f log_output/manifests/namespace.yaml
+kubectl apply -f pingpong/manifests
+kubectl apply -f log_output/manifests

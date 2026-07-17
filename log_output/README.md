@@ -1,22 +1,12 @@
-# 2.1 Connecting pods
+# 2.3 Keep them separated
 
-Connect the Log output application and the Ping pong application using an HTTP GET endpoint to share the number of pongs instead of using file sharing. Temporarily remove the volume between the two applications.
-
-The response of the `HTTP GET` to Log output will stay the same:
-
-```
-2020-03-30T12:15:17.705Z: 8523ecb1-c716-4cb6-a044-b9e83bb98e43
-2020-03-30T12:15:22.705Z: 8523ecb1-c716-4cb6-a044-b9e83bb98e43
-```
+Create a namespace called exercises for the applications in the exercises. Move the "Log output" and "Ping-pong" to that namespace and use that in the future for all of the exercises, except the project that shall have a separate namespace. You can follow the course material using the default namespace.
 
 ### How to run:
 
-To run this application, execute the following commands in your command-line.
+**NOTE: This exercise focuses on creating namespaces. To build the application, first follow the installation guide from exercise [2.1 Connecting Pods](https://github.com/MACLEB1903/devops-with-kubernetes/tree/2.1/log_output).**
 
-```bash
-# Expose the cluster load balancer port.
-k3d cluster edit <cluster-name> --port-add "3000:80@loadbalancer"
-```
+To run this application, execute the following commands in your command-line.
 
 ```bash
 # Run the script.
@@ -28,12 +18,18 @@ k3d cluster edit <cluster-name> --port-add "3000:80@loadbalancer"
 To test this application, execute the following commands in your command-line.
 
 ```bash
-# Open the application in your browser.
-curl http://localhost:3002/
+# Set the current context to use the exercises namespace.
+kubectl config set-context --current --namespace=exercises
 ```
 
 ```bash
-# Expected ouput should be similar to:
-2026-07-15T01:45:49.535Z: 8a125499-e952-470b-b9f7-b9d86a51669c
-Pings: 1
+# List the Pods in the exercises namespace.
+kubectl get pods
+```
+
+```bash
+# Expected terminal output, similar to the following:
+NAME                                     READY   STATUS    RESTARTS   AGE
+log-output-deployment-xxxxxxxx-xxxxx     2/2     Running   0          49s
+pingpong-deployment-xxxxxxxxxx-xxxxx     1/1     Running   0          49s
 ```
