@@ -31,5 +31,5 @@ kubectl get pods
 # Expected terminal output, similar to the following:
 NAME                                     READY   STATUS    RESTARTS   AGE
 todo-backend-deployment-xxxxxxxx-xxxxx   2/2     Running   0          49s
-todo-frontend-deploymen-xxxxxxxxxx-xxxxx  /1     Running   0          49s
+todo-frontend-deploymen-xxxxxxxxxx-xxxxx 1/1     Running   0          49s
 ```
