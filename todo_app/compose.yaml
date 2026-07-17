@@ -1,20 +1,21 @@
 services:
-  fetcher:
+  image-worker:
     build: ./backend
-    command: npm run fetch
-    container_name: todo-fetcher
-    image: todo-fetcher
+    command: npm run image-worker
+    container_name: image-worker
+    image: image-worker
     environment:
       FILES_DIR: "/usr/src/app/files"
       IMAGE_NAME: "image.jpg"
       PICSUM_URL: "https://picsum.photos/1200"
     volumes:
       - todo-files:/usr/src/app/files
-  api:
+
+  image-backend:
     build: ./backend
-    command: npm start
-    container_name: todo-api
-    image: todo-api
+    command: npm run image-backend
+    container_name: image-backend
+    image: image-backend
     expose:
       - "3001"
     environment:
@@ -24,19 +25,29 @@ services:
     volumes:
       - todo-files:/usr/src/app/files
     depends_on:
-      - fetcher
+      - image-worker
 
-  frontend:
+  todo-frontend:
     build: ./frontend
     image: todo-frontend
     container_name: todo-frontend
     ports:
       - "3000:3000"
     environment:
-      VITE_FETCH_URL: "/image"
+      IMAGE_FETCH_URL: "/image"
     depends_on:
-      - api
-      - fetcher
+      - image-worker
+      - image-backend
+
+  todo-backend:
+    build: ./backend
+    command: npm run todo-backend
+    container_name: todo-backend
+    image: todo-backend
+    expose:
+      - "3000"
+    environment:
+      PORT: 3000
 
 volumes:
   todo-files:

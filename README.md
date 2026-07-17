@@ -31,3 +31,4 @@ This directory is a collection of all the projects submitted for the course [Dev
 ### 1. Networking Between Pods
 
 - [2.1](https://github.com/MACLEB1903/devops-with-kubernetes/tree/2.1): Connecting Pods
+- [2.1](https://github.com/MACLEB1903/devops-with-kubernetes/tree/2.2): The project, Step 8

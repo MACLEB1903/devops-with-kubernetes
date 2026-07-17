@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: todo-deployment
+  name: todo-frontend-deployment
   labels:
-    app: todo
+    app: todo-frontend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: todo
+      app: todo-frontend
   template:
     metadata:
       labels:
-        app: todo
+        app: todo-frontend
     spec:
       dnsPolicy: Default
       volumes:
@@ -21,10 +21,10 @@ spec:
             claimName: todo-pvclaim
 
       containers:
-        - name: todo-fetcher
-          image: todo-fetcher
+        - name: image-worker
+          image: image-worker
           command: ["npm"]
-          args: ["run", "fetch"]
+          args: ["run", "image-worker"]
           imagePullPolicy: IfNotPresent
           env:
             - name: FILES_DIR
@@ -37,10 +37,10 @@ spec:
             - name: todo-volumes
               mountPath: "/usr/src/app/files"
 
-        - name: todo-api
-          image: todo-api
+        - name: image-backend
+          image: image-backend
           command: ["npm"]
-          args: ["start"]
+          args: ["run", "image-backend"]
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3001
@@ -61,5 +61,37 @@ spec:
           ports:
             - containerPort: 3000
           env:
-            - name: VITE_FETCH_URL
+            - name: VITE_IMAGE_FETCH_URL
               value: "/image"
+            - name: VITE_TODOS_FETCH_URL
+              value: "/todos"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-backend-deployment
+  labels:
+    app: todo-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-backend
+  template:
+    metadata:
+      labels:
+        app: todo-backend
+
+    spec:
+      containers:
+        - image: todo-backend
+          name: todo-backend
+          command: ["npm"]
+          args: ["run", "todo-backend"]
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PORT
+              value: "3000"
+          ports:
+            - containerPort: 3000

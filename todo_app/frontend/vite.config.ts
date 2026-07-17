@@ -16,6 +16,10 @@ export default defineConfig({
         target: "http://localhost:3001",
         changeOrigin: true,
       },
+      "/todos": {
+        target: "http://todo-backend-svc:2345",
+        changeOrigin: true,
+      },
     },
   },
 });

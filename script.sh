@@ -1,23 +1,25 @@
-# Change directoty to devops-with-kubernetes
-cd && cd devops-with-kubernetes
+#!/usr/bin/env bash
+
+# Exit when changing directory fails.
+cd ~/devops-with-kubernetes
 
 # Delete existing images.
-docker rmi log-generator
-docker rmi log-reader
-docker rmi pingpong
+docker rmi image-worker
+docker rmi image-backend
+docker rmi todo-frontend
+docker rmi todo-backend
 
-# Delete previous existing manifests.
-kubectl delete -f log_output/manifests/
-kubectl delete -f pingpong/manifests/
+# Delete previously applied manifests.
+kubectl delete -f todo_app/manifests
 
-# Build the images and import the the k3d cluster.
-docker compose -f log_output/compose.yaml build
-docker compose -f pingpong/compose.yaml build
+# Build the images.
+docker compose -f todo_app/compose.yaml build
 
-k3d image import log-generator -c log-output
-k3d image import log-reader -c log-output
-k3d image import pingpong -c log-output
+# Import the images into the k3d cluster.
+k3d image import image-worker -c <cluster-name>
+k3d image import image-backend -c <cluster-name>
+k3d image import todo-frontend -c <cluster-name>
+k3d image import todo-backend -c <cluster-name>
 
 # Apply the manifests.
-kubectl apply -f log_output/manifests/
-kubectl apply -f pingpong/manifests/
+kubectl apply -f todo_app/manifests/

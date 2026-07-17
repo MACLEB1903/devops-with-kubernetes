@@ -35,7 +35,7 @@ export default function Hero() {
   })[0];
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 ">
       <div
         id="time-clock"
         className="text-5xl lg:text-6xl 2xl:text-8xl font-bold flex items-center justify-center"

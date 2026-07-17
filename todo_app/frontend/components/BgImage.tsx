@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
 // @ts-ignore
-const VITE_FETCH_URL = import.meta.env.VITE_FETCH_URL;
+const VITE_IMAGE_FETCH_URL = import.meta.env.VITE_IMAGE_FETCH_URL;
 
-export default function ImageWrapper() {
+export default function BgImage() {
   const [imageUrl, setImageUrl] = useState<string>("");
 
   useEffect(() => {
@@ -11,7 +11,7 @@ export default function ImageWrapper() {
 
     async function fetchImage() {
       try {
-        const response = await fetch(VITE_FETCH_URL);
+        const response = await fetch(VITE_IMAGE_FETCH_URL);
         const blob = await response.blob();
 
         objectUrl = URL.createObjectURL(blob);

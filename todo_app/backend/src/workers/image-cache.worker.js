@@ -18,8 +18,6 @@ const fetchImage = async () => {
 
     const buffer = Buffer.from(await response.arrayBuffer());
     await writeFile(filePath, buffer);
-
-    console.log("New image fetched");
   } catch (error) {
     console.error(error);
   }
