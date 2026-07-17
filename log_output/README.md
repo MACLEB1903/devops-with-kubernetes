@@ -29,7 +29,7 @@ k3d cluster edit <cluster-name> --port-add "3000:80@loadbalancer"
 ```
 
 ```bash
-# List the Pods in the exercises namespace.
+# Open the following url in your browser.
 http://localhost:3000/
 http://localhost:3000/pingpong
 ```
