@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: todo-configmap
+  namespace: project
+data:
+  FILES_DIR: "/usr/src/app/files"
+  IMAGE_NAME: "image.jpg"
+  PICSUM_URL: "https://picsum.photos/1200"
+  VITE_IMAGE_FETCH_URL: "/image"
+  VITE_TODOS_FETCH_URL: "/todos"

@@ -1,15 +1,14 @@
-# 2.4 The Project, Step 9
+# 2.6 The project, Step 10
 
-Create a namespace called project for the project and move everything related to the project to that namespace. Use the new namespace in the future for all the project related exercises.
+Make sure that your project has no hard coded ports, URLs, or other configurations in the source code. Pass all the configurations to pods as env variables that are defined either in a config map or in deployments.
 
 ### How to run:
-
-**NOTE: This exercise focuses on creating namespaces. To build the application, first follow the installation guide from exercise [2.2 The project, Step 8](https://github.com/MACLEB1903/devops-with-kubernetes/tree/2.2/todo_app).**
 
 To run this application, execute the following commands in your command-line.
 
 ```bash
 # Run the script.
+# Remember to update `<cluster-name>` on the script.sh.
 ./script.sh
 ```
 
@@ -18,18 +17,12 @@ To run this application, execute the following commands in your command-line.
 To test this application, execute the following commands in your command-line.
 
 ```bash
-# Set the current context to use the exercises namespace.
-kubectl config set-context --current --namespace=project
+# Expose the cluster load balancer port.
+k3d cluster edit <cluster-name> --port-add "3000:80@loadbalancer"
 ```
 
 ```bash
-# List the Pods in the exercises namespace.
-kubectl get pods
-```
-
-```bash
-# Expected terminal output, similar to the following:
-NAME                                     READY   STATUS    RESTARTS   AGE
-todo-backend-deployment-xxxxxxxx-xxxxx   2/2     Running   0          49s
-todo-frontend-deploymen-xxxxxxxxxx-xxxxx 1/1     Running   0          49s
+# Open the following url in your browser.
+http://localhost:3000/
+http://localhost:3000/todos
 ```

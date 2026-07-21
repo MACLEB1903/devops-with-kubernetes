@@ -29,11 +29,23 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: FILES_DIR
-              value: "/usr/src/app/files"
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-configmap
+                  key: FILES_DIR
+
             - name: IMAGE_NAME
-              value: "image.jpg"
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-configmap
+                  key: IMAGE_NAME
+
             - name: PICSUM_URL
-              value: "https://picsum.photos/1200"
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-configmap
+                  key: PICSUM_URL
+
           volumeMounts:
             - name: todo-volumes
               mountPath: "/usr/src/app/files"
@@ -48,10 +60,17 @@ spec:
           env:
             - name: PORT
               value: "3001"
-            - name: FILES_DIR
-              value: "/usr/src/app/files"
             - name: IMAGE_NAME
-              value: "image.jpg"
+              valueFrom:
+                configMapKeyRef:
+                  key: IMAGE_NAME
+                  name: todo-configmap
+            - name: FILES_DIR
+              valueFrom:
+                configMapKeyRef:
+                  key: FILES_DIR
+                  name: todo-configmap
+
           volumeMounts:
             - name: todo-volumes
               mountPath: "/usr/src/app/files"
@@ -63,9 +82,15 @@ spec:
             - containerPort: 3000
           env:
             - name: VITE_IMAGE_FETCH_URL
-              value: "/image"
+              valueFrom:
+                configMapKeyRef:
+                  name: todo-configmap
+                  key: VITE_IMAGE_FETCH_URL
             - name: VITE_TODOS_FETCH_URL
-              value: "/todos"
+              valueFrom:
+                configMapKeyRef:
+                  key: VITE_TODOS_FETCH_URL
+                  name: todo-configmap
 
 ---
 apiVersion: apps/v1
