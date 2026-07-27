@@ -1,5 +1,32 @@
 services:
-  pingpong:
-    build: .
+  pingpong-database:
+    container_name: pingpong-database
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "pingpong-database"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+  pingpong-backend:
+    build: ./backend
     container_name: pingpong-container
-    image: pingpong
+    image: pingpong-backend
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_HOST: "pingpong-database"
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: "pingpong-database"
+    depends_on:
+      - pingpong-database
+
+volumes:
+  postgres-data:

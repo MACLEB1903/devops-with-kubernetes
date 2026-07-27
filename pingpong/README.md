@@ -1,15 +1,14 @@
-# 2.3 Keep them separated
+# 2.3 Stateful application
 
-Create a namespace called exercises for the applications in the exercises. Move the "Log output" and "Ping-pong" to that namespace and use that in the future for all of the exercises, except the project that shall have a separate namespace. You can follow the course material using the default namespace.
+Run a Postgres database as a stateful set (with one replica) and save the Ping-pong application counter into the database.
 
 ### How to run:
-
-**NOTE: This exercise focuses on creating namespaces. To build the application, first follow the installation guide from exercise [2.1 Connecting Pods](https://github.com/MACLEB1903/devops-with-kubernetes/tree/2.1/pingpong).**
 
 To run this application, execute the following commands in your command-line.
 
 ```bash
 # Run the script.
+# Remember to update `<cluster-name>` on the script.sh.
 ./script.sh
 ```
 
@@ -18,8 +17,8 @@ To run this application, execute the following commands in your command-line.
 To test this application, execute the following commands in your command-line.
 
 ```bash
-# Set the current context to use the exercises namespace.
-kubectl config set-context --current --namespace=exercises
+# Expose the cluster load balancer port.
+k3d cluster edit <cluster-name> --port-add "3000:80@loadbalancer"
 ```
 
 ```bash
@@ -28,8 +27,23 @@ kubectl get pods
 ```
 
 ```bash
-# Expected terminal output, similar to the following:
-NAME                                     READY   STATUS    RESTARTS   AGE
-log-output-deployment-xxxxxxxx-xxxxx     2/2     Running   0          49s
-pingpong-deployment-xxxxxxxxxx-xxxxx     1/1     Running   0          49s
+# Open the following url in your browser.
+http://localhost:3000/pingpong
+
+# Excepted output:
+# Ping / Pongs: 1
+```
+
+```bash
+# Delete the statefulset pod then apply it again.
+kubectl delete pod pingpong-db-statefulset-0
+kubectl apply -f pingpong/manifests/statefulset.yaml
+```
+
+```bash
+# Open the following url in your browser.
+http://localhost:3000/pingpong
+
+# Excepted output:
+# Ping / Pongs: 2
 ```

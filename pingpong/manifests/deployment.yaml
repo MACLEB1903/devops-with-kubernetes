@@ -1,26 +1,58 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pingpong-deployment
+  name: pingpong-api-deployment
   namespace: exercises
   labels:
-    app: pingpong
+    app: pingpong-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: pingpong
+      app: pingpong-api
   template:
     metadata:
       labels:
-        app: pingpong
+        app: pingpong-api
     spec:
       containers:
-        - name: pingpong-container
-          image: pingpong
+        - name: pingpong-api-container
+          image: pingpong-backend
           imagePullPolicy: IfNotPresent
+
           ports:
             - containerPort: 3000
+
           env:
             - name: PORT
               value: "3000"
+
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_USER
+                  name: pingpong-configmap
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_PASSWORD
+                  name: pingpong-configmap
+
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_HOST
+                  name: pingpong-configmap
+
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_PORT
+                  name: pingpong-configmap
+
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_DB
+                  name: pingpong-configmap

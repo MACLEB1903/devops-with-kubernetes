@@ -42,3 +42,7 @@ This directory is a collection of all the projects submitted for the course [Dev
 
 - [2.5](https://github.com/MACLEB1903/devops-with-kubernetes/tree/2.5): Documentation and ConfigMaps
 - [2.6](https://github.com/MACLEB1903/devops-with-kubernetes/tree/2.6): The Project, Step 10
+
+### 4. StatefulSets and Jobs
+
+- [2.7](https://github.com/MACLEB1903/devops-with-kubernetes/tree/2.7): Stateful Applications
