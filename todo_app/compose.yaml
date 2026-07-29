@@ -11,6 +11,12 @@ services:
     volumes:
       - todo-files:/usr/src/app/files
 
+  wikipedia-worker:
+    build: ./backend
+    command: npm run wikipedia-worker
+    container_name: wikipedia-worker
+    image: wikipedia-worker
+
   image-backend:
     build: ./backend
     command: npm run image-backend

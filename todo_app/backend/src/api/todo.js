@@ -17,10 +17,10 @@ app.use(express.json());
 
 app.post("/todos", async (req, res) => {
   try {
-    const { id, title } = req.body;
+    const { title } = req.body;
     const newTodo = await client.query(
-      "INSERT INTO todos (id, title) VALUES($1, $2) RETURNING *",
-      [id, title],
+      "INSERT INTO todos (title) VALUES($1) RETURNING *",
+      [title],
     );
 
     res.status(201).send("Todo added succesfully.");

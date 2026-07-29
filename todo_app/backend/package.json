@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "image-worker": "node src/workers/image-cache.worker.js",
+    "wikipedia-worker": "node src/workers/wikipedia-todo.worker.js",
     "image-backend": "node src/api/image.js",
     "todo-backend": "node src/api/todo.js"
   },

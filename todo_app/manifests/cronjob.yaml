@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: wikipedia-cronjob
+  namespace: project
+spec:
+  schedule: "0 * * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          dnsPolicy: ClusterFirst
+          restartPolicy: OnFailure
+
+          containers:
+            - name: wikipedia-worker-container
+              image: wikipedia-worker
+              imagePullPolicy: IfNotPresent
+              command: ["npm"]
+              args: ["run", "wikipedia-worker"]
+
+              env:
+                - name: WIKIPEDIA_URL
+                  valueFrom:
+                    configMapKeyRef:
+                      name: todo-configmap
+                      key: WIKIPEDIA_URL
+
+                - name: TODOS_FETCH_URL
+                  valueFrom:
+                    configMapKeyRef:
+                      name: todo-configmap
+                      key: TODOS_FETCH_URL

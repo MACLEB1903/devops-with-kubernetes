@@ -10,6 +10,9 @@ data:
   VITE_IMAGE_FETCH_URL: "/image"
   VITE_TODOS_FETCH_URL: "/todos"
 
+  WIKIPEDIA_URL: "https://en.wikipedia.org/wiki/Special:Random"
+  TODOS_FETCH_URL: "http://todo-backend-svc:2345/todos"
+
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -28,4 +31,4 @@ data:
     CREATE TABLE todos (
       id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
       title TEXT NOT NULL
-    );
+    )

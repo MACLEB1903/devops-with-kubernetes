@@ -1,6 +1,8 @@
-# 2.8 The project, Step 11
+# 2.9 The Project, Step 12
 
-Create a database and save the todos there. Again, the database should be defined as a stateful set with one replica. Use `Secrets` and/or `ConfigMaps` to have the backend access the database.
+Create a CronJob that generates a new todo every hour to remind you to do 'Read <URL>', here <URL> is a Wikipedia article that was decided by the job randomly. It does not have to be a hyperlink, the user can copy-paste the URL from the todo.
+
+https://en.wikipedia.org/wiki/Special:Random(opens in a new tab) responds with a redirect to a random Wikipedia page so you can ask it to provide a random article for you to read. TIP: Check location header
 
 ### How to run:
 

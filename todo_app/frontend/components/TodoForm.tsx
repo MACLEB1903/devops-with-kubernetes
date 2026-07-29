@@ -21,7 +21,6 @@ export default function TodoForm() {
         body: JSON.stringify({
           // @ts-ignore
           title: inputRef.current?.value,
-          id: crypto.randomUUID(),
         }),
       });
 
