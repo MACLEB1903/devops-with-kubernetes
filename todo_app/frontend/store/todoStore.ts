@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 type TodoType = {
   id: string;
-  item: string;
+  title: string;
 };
 
 type TodoStoreType = {

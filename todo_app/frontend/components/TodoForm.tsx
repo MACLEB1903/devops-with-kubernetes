@@ -20,7 +20,7 @@ export default function TodoForm() {
         },
         body: JSON.stringify({
           // @ts-ignore
-          item: inputRef.current?.value,
+          title: inputRef.current?.value,
           id: crypto.randomUUID(),
         }),
       });

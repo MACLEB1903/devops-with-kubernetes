@@ -9,3 +9,23 @@ data:
   PICSUM_URL: "https://picsum.photos/1200"
   VITE_IMAGE_FETCH_URL: "/image"
   VITE_TODOS_FETCH_URL: "/todos"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: todo-database-configmap
+  namespace: project
+data:
+  POSTGRES_USER: "postgres"
+  POSTGRES_PASSWORD: "postgres"
+  POSTGRES_HOST: "todo-database-svc"
+  POSTGRES_PORT: "5432"
+  POSTGRES_DB: "todo-database"
+
+  init.sql: |
+    CREATE EXTENSION IF NOT EXISTS pgcrypto;
+    CREATE TABLE todos (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      title TEXT NOT NULL
+    );

@@ -1,3 +1,4 @@
+# todo-frontend-deployment uses volumes
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -92,6 +93,8 @@ spec:
                   key: VITE_TODOS_FETCH_URL
                   name: todo-configmap
 
+
+# todo-backend-deployment uses database
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -117,8 +120,40 @@ spec:
           command: ["npm"]
           args: ["run", "todo-backend"]
           imagePullPolicy: IfNotPresent
+
           env:
             - name: PORT
               value: "3000"
+
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_USER
+                  name: todo-database-configmap
+
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_PASSWORD
+                  name: todo-database-configmap
+
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_HOST
+                  name: todo-database-configmap
+
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_DB
+                  name: todo-database-configmap
+
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_PORT
+                  name: todo-database-configmap
+
           ports:
             - containerPort: 3000

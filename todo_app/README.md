@@ -1,6 +1,6 @@
-# 2.6 The project, Step 10
+# 2.8 The project, Step 11
 
-Make sure that your project has no hard coded ports, URLs, or other configurations in the source code. Pass all the configurations to pods as env variables that are defined either in a config map or in deployments.
+Create a database and save the todos there. Again, the database should be defined as a stateful set with one replica. Use `Secrets` and/or `ConfigMaps` to have the backend access the database.
 
 ### How to run:
 

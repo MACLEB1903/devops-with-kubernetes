@@ -1,19 +1,41 @@
 import express from "express";
+import { Client } from "pg";
 
 const PORT = process.env.PORT;
 const app = express();
 
-const todos = [];
-app.use(express.json());
-
-app.get("/todos", (req, res) => {
-  res.json(todos);
+const client = new Client({
+  user: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  host: process.env.POSTGRES_HOST,
+  database: process.env.POSTGRES_DB,
+  port: Number(process.env.POSTGRES_PORT),
 });
 
-app.post("/todos", (req, res) => {
-  const body = req.body;
-  todos.push(body);
-  res.status(201).send("Todo added succesfully.");
+await client.connect();
+app.use(express.json());
+
+app.post("/todos", async (req, res) => {
+  try {
+    const { id, title } = req.body;
+    const newTodo = await client.query(
+      "INSERT INTO todos (id, title) VALUES($1, $2) RETURNING *",
+      [id, title],
+    );
+
+    res.status(201).send("Todo added succesfully.");
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+app.get("/todos", async (req, res) => {
+  try {
+    const todos = await client.query("SELECT * FROM todos");
+    res.json(todos.rows);
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 app.listen(PORT, () => {

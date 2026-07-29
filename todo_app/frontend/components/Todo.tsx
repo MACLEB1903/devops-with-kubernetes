@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 type TodoItemProps = {
-  item: string;
+  title: string;
   id: string;
 };
 
@@ -11,7 +11,7 @@ type TodoProps = {
 
 export default function Todo({ todo }: TodoProps) {
   const [isChecked, setIsChecked] = useState(false);
-  const { id, item } = todo;
+  const { id, title } = todo;
 
   return (
     <li
@@ -20,7 +20,7 @@ export default function Todo({ todo }: TodoProps) {
       onClick={() => (isChecked ? setIsChecked(false) : setIsChecked(true))}
     >
       <input type="checkbox" checked={isChecked} className="cursor-pointer" />
-      <span className={`${isChecked && "line-through"}`}>{item}</span>
+      <span className={`${isChecked && "line-through"}`}>{title}</span>
     </li>
   );
 }
