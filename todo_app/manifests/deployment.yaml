@@ -16,7 +16,7 @@ spec:
       labels:
         app: todo-frontend
     spec:
-      dnsPolicy: Default
+      dnsPolicy: ClusterFirst
       volumes:
         - name: todo-volumes
           persistentVolumeClaim:
@@ -80,18 +80,7 @@ spec:
           image: todo-frontend
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 3000
-          env:
-            - name: VITE_IMAGE_FETCH_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: todo-configmap
-                  key: VITE_IMAGE_FETCH_URL
-            - name: VITE_TODOS_FETCH_URL
-              valueFrom:
-                configMapKeyRef:
-                  key: VITE_TODOS_FETCH_URL
-                  name: todo-configmap
+            - containerPort: 80
 
 
 # todo-backend-deployment uses database

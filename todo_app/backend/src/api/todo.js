@@ -18,6 +18,14 @@ app.use(express.json());
 app.post("/todos", async (req, res) => {
   try {
     const { title } = req.body;
+
+    if (title.length > 140) {
+      console.warn(`Error: todo length should not be greater than 140`);
+      return res
+        .status(400)
+        .json({ error: "Todo title cannot exceed 140 characters." });
+    }
+
     const newTodo = await client.query(
       "INSERT INTO todos (title) VALUES($1) RETURNING *",
       [title],

@@ -1,8 +1,8 @@
-# 2.9 The Project, Step 12
+# 2.10 The Project, Step 13
 
-Create a CronJob that generates a new todo every hour to remind you to do 'Read <URL>', here <URL> is a Wikipedia article that was decided by the job randomly. It does not have to be a hyperlink, the user can copy-paste the URL from the todo.
+The project could really use logging. Add request logging so that you can monitor every todo that is sent to the backend.
 
-https://en.wikipedia.org/wiki/Special:Random(opens in a new tab) responds with a redirect to a random Wikipedia page so you can ask it to provide a random article for you to read. TIP: Check location header
+Set the limit of 140 characters for todos in the backend as well. Use Postman or curl to test that too long todos are blocked by the backend, and you can see the non-allowed messages in your Grafana.
 
 ### How to run:
 
@@ -27,4 +27,13 @@ k3d cluster edit <cluster-name> --port-add "3000:80@loadbalancer"
 # Open the following url in your browser.
 http://localhost:3000/
 http://localhost:3000/todos
+```
+
+```bash
+# Port-forward Prometheus and Grafana to access their dashboards locally.
+kubectl port-forward -n monitoring svc/prom-prometheus-server 9090:80
+kubectl port-forward -n monitoring svc/grafana 3001:80
+
+http://localhost:9090/
+http://localhost:3001/
 ```

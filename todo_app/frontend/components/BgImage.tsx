@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 // @ts-ignore
-const VITE_IMAGE_FETCH_URL = import.meta.env.VITE_IMAGE_FETCH_URL;
+const VITE_IMAGE_FETCH_URL = "/image";
 
 export default function BgImage() {
   const [imageUrl, setImageUrl] = useState<string>("");

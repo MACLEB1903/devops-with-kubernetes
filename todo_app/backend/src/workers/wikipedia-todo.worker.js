@@ -18,6 +18,7 @@ const generateTodo = async () => {
 (async () => {
   try {
     const title = await generateTodo();
+    if (!title) process.exit(1);
 
     const response = await fetch(TODOS_FETCH_URL, {
       method: "POST",

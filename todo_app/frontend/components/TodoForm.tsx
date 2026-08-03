@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import { useTodoStore } from "../store/todoStore";
 
-const VITE_TODOS_FETCH_URL = import.meta.env.VITE_TODOS_FETCH_URL;
+const VITE_TODOS_FETCH_URL = "/todos";
+
 export default function TodoForm() {
   const { fetchTodos } = useTodoStore()!;
 
