@@ -48,3 +48,13 @@ This directory is a collection of all the projects submitted for the course [Dev
 - [2.7](https://github.com/MACLEB1903/devops-with-kubernetes/tree/2.7): Stateful Applications
 - [2.8](https://github.com/MACLEB1903/devops-with-kubernetes/tree/2.8): The project, Step 11
 - [2.9](https://github.com/MACLEB1903/devops-with-kubernetes/tree/2.9): The project, Step 12
+
+### 5. Monitoring
+
+- [2.10](https://github.com/MACLEB1903/devops-with-kubernetes/tree/2.10): The project, Step 13
+
+## Chapter 4
+
+### 1. Introduction to Google Kubernetes Engine
+
+- [3.1](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.1): Pingpong GKE

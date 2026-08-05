@@ -1,31 +1,29 @@
+# Switch to devops-with-kubernete dir.
 cd && cd devops-with-kubernetes
 
 # Delete previously created images.
-docker rmi image-worker
-docker rmi image-backend
-docker rmi todo-frontend
-docker rmi todo-backend
 docker rmi postgres:16-alpine
-docker rmi wikipedia-worker
+docker rmi pingpong-backend
+
 # Build the images.
-docker compose -f todo_app/compose.yaml build
+docker compose -f pingpong/compose.yaml build
 
-# Import the images into the k3d cluster.
-k3d image import image-worker -c <cluster-name>
-k3d image import image-backend -c <cluster-name>
-k3d image import todo-frontend -c <cluster-name>
-k3d image import todo-backend -c <cluster-name>
-k3d image import wikipedia-worker -c <cluster-name>
+# Create Azure resources (resource group, ACR, AKS, and role assignment) using Terraform.
+terraform init
+terraform plan
+terraform apply --auto-approve
 
-# Delete all resources associated with the "project" namespace, if they exist.
-kubectl delete -f todo_app/manifests/namespace.yaml
+# Push the image to the azure container registry.
+docker tag pingpong-backend <acr-name>.azurecr.io/pingpong-backend
+docker push <arc-name>.azurecr.io/pingpong-backend:latest
 
-# Create the namespace "project".
-kubectl apply -f todo_app/manifests/namespace.yaml
+# Login and connect local kubectl to the AKS cluster.
+az login
+az aks get-credentials \
+  --resource-group pingpong\
+  --name pingpongakc \
+  --overwrite-existing
 
-# Set the current namespaces to "project" in the cluster.
-kubectl config set-context --current --namespace=project
-kubectl get namespaces
-
-# Apply the updated manifests.
-kubectl apply -f todo_app/manifests
+# Apply the updated manifests, including namespace.yaml.
+kubectl apply -f pingpong/manifests/namespace.yaml
+kubectl apply -f pingpong/manifests

@@ -4,7 +4,7 @@ metadata:
   name: pingpong-db-statefulset
   namespace: exercises
 spec:
-  serviceName: pingpong-db
+  serviceName: pingpong-db-svc
   replicas: 1
 
   selector:
@@ -41,6 +41,9 @@ spec:
                 configMapKeyRef:
                   name: pingpong-configmap
                   key: POSTGRES_DB
+
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
 
           volumeMounts:
             - name: pingpong-init

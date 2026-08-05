@@ -17,8 +17,7 @@ spec:
     spec:
       containers:
         - name: pingpong-api-container
-          image: pingpong-backend
-          imagePullPolicy: IfNotPresent
+          image: pingpongacr0001.azurecr.io/pingpong-backend
 
           ports:
             - containerPort: 3000
