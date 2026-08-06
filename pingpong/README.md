@@ -1,17 +1,17 @@
-# 3.1 Pingpong GKE
+# 3.2 Back to Ingress
 
-Deploy Ping-pong application into GKE. In this exercise use a LoadBalancer service to expose the service.
+Deploy the "Log output" and "Ping-pong" applications to GKE, exposing them via Ingress. Ensure "Ping-pong" responds correctly from the /pingpong path, which may involve code modifications. Remember that Ingress requires a successful response from the root path (/) even if mapped to a different path.
 
 ### How to run:
 
+NOTE: This exercise uses Azure resources and Terraform. Make sure you have an active Azure account, an available subscription, and permission to create resources. To install Terraform, follow the official [HashiCorp installation guide.](https://developer.hashicorp.com/terraform/install?utm_source=chatgpt.com)
+
 To run this application, execute the following commands in your command-line.
 
-Make sure you have Terraform installed before continuing. Follow the official [HashiCorp installation guide.](https://developer.hashicorp.com/terraform/install?utm_source=chatgpt.com)
+
 
 ```bash
 # Run the script.
-# NOTE: Remember to update `<arc-name>` on the terraform/variables.tf
-# NOTE: Remember to update `<arc-name>` on the script.sh
 ./script.sh
 ```
 
@@ -20,23 +20,22 @@ Make sure you have Terraform installed before continuing. Follow the official [H
 To test this application, execute the following commands in your command-line.
 
 ```bash
-# Get the EXTERNAL-IP address.
-kubectl get svc
+# Get the ingress ADDRESS in the 'exercises' namespace.
+kubectl get ingress -n exercises
 
 # You should see a similar response:
-NAME               TYPE           CLUSTER-IP      EXTERNAL-IP    PORT(S)          AGE
-pingpong-api-svc   LoadBalancer   10.240.15.87    203.0.113.42   8080:31456/TCP   5m12s
-pingpong-db-svc    ClusterIP      10.240.18.22    <none>         5432/TCP         5m12s
+NAME                 CLASS                                HOSTS   ADDRESS        PORTS   AGE
+log-output-ingress   webapprouting.kubernetes.azure.com   *       10.234.56.78   80      1m
 ```
 
 ```bash
-# Open the pingpong-api-svc EXTERNAL-IP address in your browser. 
-http://203.0.113.42/pingpong
+# Open the log-output-ingress ADDRESS address in your browser. 
+http://10.234.56.78/
+http://10.234.56.78/pingpong
 ```
 
 ```bash
 # NOTE: Remember to destroy the resources afterward.
-terraform destroy
+cd terraform
+terraform destroy --auto-approve
 ```
-
-

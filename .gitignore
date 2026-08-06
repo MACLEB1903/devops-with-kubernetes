@@ -20,3 +20,7 @@ out/
 Thumbs.db
 .vscode/
 .idea/
+
+.terraform*
+*.tfstate
+*.tfstate.*

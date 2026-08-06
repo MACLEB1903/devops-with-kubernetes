@@ -8,6 +8,20 @@ spec:
   selector:
     app: log-output
   ports:
-    - port: 2345
+    - port: 80
       protocol: TCP
       targetPort: 3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: exercises
+  name: log-generator-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: log-generator
+  ports:
+  - port: 80
+    targetPort: 3000

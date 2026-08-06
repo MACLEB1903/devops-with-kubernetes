@@ -1,21 +1,17 @@
-# 2.5 Documentation and ConfigMap
+# 3.2 Back to Ingress
 
-Use the official Kubernetes documentation to create a ConfigMap for the "Log output" application. Define one file named information. txt and one environment variable MESSAGE. Map the file as a volume, set the variable, and print the content along with the usual output:
-
-```
-file content: this text is from file
-env variable: MESSAGE=hello world
-2026-05-18T12:15:17.705Z: 8523ecb1-c716-4cb6-a044-b9e83bb98e43.
-Ping / Pongs: 3
-```
+Deploy the "Log output" and "Ping-pong" applications to GKE, exposing them via Ingress. Ensure "Ping-pong" responds correctly from the /pingpong path, which may involve code modifications. Remember that Ingress requires a successful response from the root path (/) even if mapped to a different path.
 
 ### How to run:
 
+NOTE: This exercise uses Azure resources and Terraform. Make sure you have an active Azure account, an available subscription, and permission to create resources. To install Terraform, follow the official [HashiCorp installation guide.](https://developer.hashicorp.com/terraform/install?utm_source=chatgpt.com)
+
 To run this application, execute the following commands in your command-line.
+
+
 
 ```bash
 # Run the script.
-# Remember to update `<cluster-name>` on the script.sh.
 ./script.sh
 ```
 
@@ -24,20 +20,22 @@ To run this application, execute the following commands in your command-line.
 To test this application, execute the following commands in your command-line.
 
 ```bash
-# Expose the cluster load balancer port.
-k3d cluster edit <cluster-name> --port-add "3000:80@loadbalancer"
+# Get the ingress ADDRESS in the 'exercises' namespace.
+kubectl get ingress -n exercises
+
+# You should see a similar response:
+NAME                 CLASS                                HOSTS   ADDRESS        PORTS   AGE
+log-output-ingress   webapprouting.kubernetes.azure.com   *       10.234.56.78   80      1m
 ```
 
 ```bash
-# Open the following url in your browser.
-http://localhost:3000/
-http://localhost:3000/pingpong
+# Open the log-output-ingress ADDRESS address in your browser. 
+http://10.234.56.78/
+http://10.234.56.78/pingpong
 ```
 
 ```bash
-# Expected browser output, similar to the following:
-file content: This file is from information.txt build with configmap.
-env variable: MESSAGE=hello world from configmap
-2026-07-17T20:11:40.837Z: 014deb58-efa5-46db-946f-54d736fb0c49
-Pings: 2
+# NOTE: Remember to destroy the resources afterward.
+cd terraform
+terraform destroy --auto-approve
 ```

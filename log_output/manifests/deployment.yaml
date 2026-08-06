@@ -16,35 +16,31 @@ spec:
         app: log-output
     spec:
       containers:
-        - name: log-generator-container
-          image: log-generator
-          imagePullPolicy: IfNotPresent
-          env:
-            - name: PORT
-              value: "3001"
-          ports:
-            - containerPort: 3001
-
         - name: log-reader-container
-          image: log-reader
-          imagePullPolicy: IfNotPresent
+          image: backtoingressacr.azurecr.io/log-reader
+
           env:
             - name: PORT
               value: "3000"
+
             - name: GENERATOR_URL
-              value: "http://localhost:3001/"
+              value: "http://log-generator-svc:80/"
+
             - name: PINGPONG_URL
-              value: "http://pingpong-svc:2345/pingpong"
+              value: "http://pingpong-api-svc:80/pingpong"
+
             - name: MESSAGE
               valueFrom:
                 configMapKeyRef:
                   name: log-output-configmap
                   key: MESSAGE
+
             - name: INFO_CONFIG_PATH
               valueFrom:
                 configMapKeyRef:
                   key: INFO_CONFIG_PATH
                   name: log-output-configmap
+
           volumeMounts:
             - name: config-volume
               mountPath: /usr/src/app/files
@@ -56,3 +52,32 @@ spec:
         - name: config-volume
           configMap:
             name: log-output-configmap
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-generator-deployment
+  namespace: exercises
+  labels:
+    app: log-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: log-generator
+  template:
+    metadata:
+      labels:
+        app: log-generator
+    spec:
+      containers:
+        - name: log-generator-container
+          image: backtoingressacr.azurecr.io/log-generator
+
+          env:
+            - name: PORT
+              value: "3000"
+          ports:
+            - containerPort: 3000

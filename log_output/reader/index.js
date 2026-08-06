@@ -17,7 +17,7 @@ app.get("/", async (req, res) => {
     const pingResponse = await fetch(PINGPONG_URL);
 
     const genData = await genResponse.json();
-    const pingData = await pingResponse.json();
+    const pingData = await pingResponse.text();
 
     res.type("text").send(
       `file content: ${infoResponse.trim()}

@@ -12,10 +12,10 @@ resource "azurerm_container_registry" "acr" {
 }
 
 resource "azurerm_kubernetes_cluster" "aks" {
-  name                = "pingpongakc"
+  name                = "backtoingressaks"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
-  dns_prefix          = "pingpongakc"
+  dns_prefix          = "backtoingressaks"
   sku_tier            = "Free"
 
   node_provisioning_profile {
