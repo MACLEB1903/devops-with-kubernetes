@@ -18,8 +18,7 @@ spec:
 
           containers:
             - name: wikipedia-worker-container
-              image: wikipedia-worker
-              imagePullPolicy: IfNotPresent
+              image: WIKIPEDIA_WORKER/IMAGE
               command: ["npm"]
               args: ["run", "wikipedia-worker"]
 

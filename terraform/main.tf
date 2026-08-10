@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_container_registry" "acr" {
-  name                = "rewrittenroutingacr"
+  name                = var.acr
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku                 = "Basic"
@@ -12,10 +12,10 @@ resource "azurerm_container_registry" "acr" {
 }
 
 resource "azurerm_kubernetes_cluster" "aks" {
-  name                = "rr-aks"
+  name                = var.aks
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
-  dns_prefix          = "rr-aks"
+  dns_prefix          = var.aks
   sku_tier            = "Free"
 
   node_provisioning_profile {
@@ -33,37 +33,14 @@ resource "azurerm_kubernetes_cluster" "aks" {
   identity {
     type = "SystemAssigned"
   }
+
+  web_app_routing {
+    dns_zone_ids = []
+  }
 }
 
 resource "azurerm_role_assignment" "aks_acr_pull" {
   scope                = azurerm_container_registry.acr.id
   role_definition_name = "AcrPull"
   principal_id         = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
-}
-
-
-
-resource "azapi_update_resource" "gateway_api" {
-  type        = "Microsoft.ContainerService/managedClusters@2026-03-01"
-  resource_id = azurerm_kubernetes_cluster.aks.id
-
-  body = {
-    properties = {
-      ingressProfile = {
-        gatewayAPI = {
-          installation = "Standard"
-        }
-
-        webAppRouting = {
-          enabled = true
-
-          gatewayAPIImplementations = {
-            appRoutingIstio = {
-              mode = "Enabled"
-            }
-          }
-        }
-      }
-    }
-  }
 }

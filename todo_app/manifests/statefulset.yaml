@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: todo-database-container
-          image: postgres:16-alpine
+          image: POSTGRES/IMAGE
           ports:
             - containerPort: 5432
 
@@ -38,6 +38,9 @@ spec:
                 configMapKeyRef:
                   key: POSTGRES_DB
                   name: todo-database-configmap
+            
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
 
           volumeMounts:
             - name: todo-init

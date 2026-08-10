@@ -1,16 +1,15 @@
-# 2.9 The Project, Step 12
+# 3.5 The Project, Step 14
 
-Create a CronJob that generates a new todo every hour to remind you to do 'Read <URL>', here <URL> is a Wikipedia article that was decided by the job randomly. It does not have to be a hyperlink, the user can copy-paste the URL from the todo.
-
-https://en.wikipedia.org/wiki/Special:Random(opens in a new tab) responds with a redirect to a random Wikipedia page so you can ask it to provide a random article for you to read. TIP: Check location header
+Configure the project to use Kustomize, and deploy it to Google Kubernetes Engine.
 
 ### How to run:
+
+NOTE: This exercise uses Azure resources and Terraform. Make sure you have an active Azure account, an available subscription, and permission to create resources. To install Terraform, follow the official [HashiCorp installation guide.](https://developer.hashicorp.com/terraform/install?utm_source=chatgpt.com)
 
 To run this application, execute the following commands in your command-line.
 
 ```bash
 # Run the script.
-# Remember to update `<cluster-name>` on the script.sh.
 ./script.sh
 ```
 
@@ -19,12 +18,22 @@ To run this application, execute the following commands in your command-line.
 To test this application, execute the following commands in your command-line.
 
 ```bash
-# Expose the cluster load balancer port.
-k3d cluster edit <cluster-name> --port-add "3000:80@loadbalancer"
+# Get the ingress ADDRESS in the 'exercises' namespace.
+kubectl get ingress -n project
+
+# You should see a similar response:
+NAME                 CLASS                                HOSTS   ADDRESS        PORTS   AGE
+todo-ingress   webapprouting.kubernetes.azure.com  *       10.234.56.78   80      1m
 ```
 
 ```bash
-# Open the following url in your browser.
-http://localhost:3000/
-http://localhost:3000/todos
+# Open the log-output-ingress ADDRESS address in your browser. 
+http://10.234.56.78/
+http://10.234.56.78/pingpong
+```
+
+```bash
+# NOTE: Remember to destroy the resources afterward.
+cd terraform
+terraform destroy --auto-approve
 ```

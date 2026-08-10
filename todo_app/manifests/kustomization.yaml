@@ -1,0 +1,32 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - persistentvolume.yaml
+  - persistentvolumeclaim.yaml
+  - statefulset.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
+  - cronjob.yaml
+
+
+images:
+  - name: IMAGE_WORKER/IMAGE
+    newName: theprojectstep14acr.azurecr.io/image-worker
+
+  - name: WIKIPEDIA_WORKER/IMAGE
+    newName: theprojectstep14acr.azurecr.io/wikipedia-worker
+
+  - name: IMAGE_BACKEND/IMAGE
+    newName: theprojectstep14acr.azurecr.io/image-backend
+
+  - name: TODO_FRONTEND/IMAGE
+    newName: theprojectstep14acr.azurecr.io/todo-frontend
+
+  - name: TODO_BACKEEND/IMAGE
+    newName: theprojectstep14acr.azurecr.io/todo-backend
+
+  - name: POSTGRES/IMAGE
+    newName: postgres:16-alpine

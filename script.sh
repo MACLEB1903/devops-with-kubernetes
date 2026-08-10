@@ -14,38 +14,38 @@ terraform apply --auto-approve
 cd ..
 
 # Build the application images.
-docker compose -f pingpong/compose.yaml build
-docker compose -f log_output/compose.yaml build
+docker compose -f todo_app/compose.yaml build
 
 # Log in using the ACR resource name, not its full domain.
-az acr login --name rewrittenroutingacr
+az acr login --name theprojectstep14acr
 
 # Tag the local images for ACR.
-docker tag pingpong-backend:latest \
-  rewrittenroutingacr.azurecr.io/pingpong-backend:latest
+docker tag image-worker:latest \
+  theprojectstep14acr.azurecr.io/image-worker:latest
 
-docker tag log-generator:latest \
-  rewrittenroutingacr.azurecr.io/log-generator:latest
+docker tag wikipedia-worker:latest \
+  theprojectstep14acr.azurecr.io/wikipedia-worker:latest
 
-docker tag log-reader:latest \
-  rewrittenroutingacr.azurecr.io/log-reader:latest
+docker tag image-backend:latest \
+  theprojectstep14acr.azurecr.io/image-backend:latest
+
+docker tag todo-frontend:latest \
+  theprojectstep14acr.azurecr.io/todo-frontend:latest
+
+docker tag todo-backend:latest \
+  theprojectstep14acr.azurecr.io/todo-backend:latest
 
 # Push the images to ACR.
-docker push rewrittenroutingacr.azurecr.io/pingpong-backend:latest
-docker push rewrittenroutingacr.azurecr.io/log-generator:latest
-docker push rewrittenroutingacr.azurecr.io/log-reader:latest
+docker push theprojectstep14acr.azurecr.io/image-worker:latest
+docker push theprojectstep14acr.azurecr.io/wikipedia-worker:latest
+docker push theprojectstep14acr.azurecr.io/image-backend:latest
+docker push theprojectstep14acr.azurecr.io/todo-frontend:latest
+docker push theprojectstep14acr.azurecr.io/todo-backend:latest
 
 # Connect kubectl to the AKS cluster.
 az aks get-credentials \
-  --resource-group e3.4-rewritten-routing \
-  --name rr-aks \
+  --resource-group e3.5-the-project-step-14\
+  --name tps14-aks \
   --overwrite-existing
 
-# Create the namespace first.
-kubectl apply -f log_output/manifests/namespace.yaml
-
-# Deploy Ping-pong first because Log Output calls it.
-kubectl apply -f pingpong/manifests
-
-# Deploy Log Output and its Ingress.
-kubectl apply -f log_output/manifests
+kubectl apply -k todo_app/manifests
