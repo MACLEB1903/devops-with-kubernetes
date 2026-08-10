@@ -18,7 +18,7 @@ To run this application, execute the following commands in your command-line.
 To test this application, execute the following commands in your command-line.
 
 ```bash
-# Get the ingress ADDRESS in the 'exercises' namespace.
+# Get the ingress ADDRESS in the 'project' namespace.
 kubectl get ingress -n project
 
 # You should see a similar response:
