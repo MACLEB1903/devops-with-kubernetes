@@ -29,7 +29,7 @@ todo-ingress   webapprouting.kubernetes.azure.com  *       10.234.56.78   80    
 ```bash
 # Open the log-output-ingress ADDRESS address in your browser. 
 http://10.234.56.78/
-http://10.234.56.78/pingpong
+http://10.234.56.78/todos
 ```
 
 ```bash
