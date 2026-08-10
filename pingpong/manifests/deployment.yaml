@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: pingpong-api-container
-          image: backtoingressacr.azurecr.io/pingpong-backend
+          image: tothegatewayacr.azurecr.io/pingpong-backend
 
           ports:
             - containerPort: 3000
