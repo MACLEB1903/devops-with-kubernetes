@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "rg" {
 }
 
 resource "azurerm_container_registry" "acr" {
-  name                = "tothegatewayacr"
+  name                = "rewrittenroutingacr"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku                 = "Basic"
@@ -12,10 +12,10 @@ resource "azurerm_container_registry" "acr" {
 }
 
 resource "azurerm_kubernetes_cluster" "aks" {
-  name                = "ttg-aks"
+  name                = "rr-aks"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
-  dns_prefix          = "ttg-aks"
+  dns_prefix          = "rr-aks"
   sku_tier            = "Free"
 
   node_provisioning_profile {

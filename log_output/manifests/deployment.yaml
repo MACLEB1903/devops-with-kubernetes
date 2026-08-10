@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: log-reader-container
-          image: tothegatewayacr.azurecr.io/log-reader
+          image: rewrittenroutingacr.azurecr.io/log-reader
 
           env:
             - name: PORT
@@ -27,7 +27,7 @@ spec:
               value: "http://log-generator-svc:80/"
 
             - name: PINGPONG_URL
-              value: "http://pingpong-api-svc:80/pingpong"
+              value: "http://pingpong-api-svc:80/"
 
             - name: MESSAGE
               valueFrom:
@@ -74,7 +74,7 @@ spec:
     spec:
       containers:
         - name: log-generator-container
-          image: tothegatewayacr.azurecr.io/log-generator
+          image: rewrittenroutingacr.azurecr.io/log-generator
 
           env:
             - name: PORT

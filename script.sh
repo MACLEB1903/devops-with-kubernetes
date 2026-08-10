@@ -18,27 +18,27 @@ docker compose -f pingpong/compose.yaml build
 docker compose -f log_output/compose.yaml build
 
 # Log in using the ACR resource name, not its full domain.
-az acr login --name tothegatewayacr
+az acr login --name rewrittenroutingacr
 
 # Tag the local images for ACR.
 docker tag pingpong-backend:latest \
-  tothegatewayacr.azurecr.io/pingpong-backend:latest
+  rewrittenroutingacr.azurecr.io/pingpong-backend:latest
 
 docker tag log-generator:latest \
-  tothegatewayacr.azurecr.io/log-generator:latest
+  rewrittenroutingacr.azurecr.io/log-generator:latest
 
 docker tag log-reader:latest \
-  tothegatewayacr.azurecr.io/log-reader:latest
+  rewrittenroutingacr.azurecr.io/log-reader:latest
 
 # Push the images to ACR.
-docker push tothegatewayacr.azurecr.io/pingpong-backend:latest
-docker push tothegatewayacr.azurecr.io/log-generator:latest
-docker push tothegatewayacr.azurecr.io/log-reader:latest
+docker push rewrittenroutingacr.azurecr.io/pingpong-backend:latest
+docker push rewrittenroutingacr.azurecr.io/log-generator:latest
+docker push rewrittenroutingacr.azurecr.io/log-reader:latest
 
 # Connect kubectl to the AKS cluster.
 az aks get-credentials \
-  --resource-group e3.3-to-the-gateway \
-  --name ttg-aks \
+  --resource-group e3.4-rewritten-routing \
+  --name rr-aks \
   --overwrite-existing
 
 # Create the namespace first.

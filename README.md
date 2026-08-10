@@ -60,3 +60,4 @@ This directory is a collection of all the projects submitted for the course [Dev
 - [3.1](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.1): Pingpong GKE
 - [3.2](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.2): Back to Ingress
 - [3.3](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.3): To the Gateway
+- [3.4](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.3): Rewritten routing

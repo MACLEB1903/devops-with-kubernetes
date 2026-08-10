@@ -15,7 +15,7 @@ const client = new Client({
 await client.connect();
 console.log("Postgres connected!");
 
-app.get("/pingpong", async (req, res) => {
+app.get("/", async (req, res) => {
   try {
     const result = await client.query(`
       UPDATE ping
