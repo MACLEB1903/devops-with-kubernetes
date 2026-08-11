@@ -61,4 +61,7 @@ This directory is a collection of all the projects submitted for the course [Dev
 - [3.2](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.2): Back to Ingress
 - [3.3](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.3): To the Gateway
 - [3.4](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.4): Rewritten routing
+
+### 2. Deployment Pipeline
 - [3.5](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.5): The project, Step 14
+- [3.6](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.6): The project, Step 15

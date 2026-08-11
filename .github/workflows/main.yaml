@@ -1,6 +1,9 @@
 name: Azure Automatic Deployment
 
-on: [push]
+on:
+  push:
+    paths:
+      - "todo_app/**"
 
 permissions:
   contents: read
@@ -102,4 +105,3 @@ jobs:
         run: |
           kubectl get ingress \
             --namespace "${{ env.NAMESPACE }}"
-            

@@ -31,10 +31,20 @@ AZURE_SUBSCRIPTION_ID
 To test this application, execute the following commands in your command-line.
 
 ```bash
-# Visit your github repo and check the latest action.
-# You should see a similar log:
+# Get the ingress ADDRESS in the 'project' namespace.
+kubectl get ingress -n project
 
+# You should see a similar response:
+NAME                 CLASS                                HOSTS   ADDRESS        PORTS   AGE
+todo-ingress   webapprouting.kubernetes.azure.com  *       10.234.56.78   80      1m
 ```
+
+```bash
+# Open the log-output-ingress ADDRESS address in your browser. 
+http://10.234.56.78/
+http://10.234.56.78/todos
+```
+
 
 ```bash
 # NOTE: Remember to destroy the resources afterward.

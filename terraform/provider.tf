@@ -4,8 +4,8 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "=5.0.0"
     }
-    azapi = {
-      source = "Azure/azapi"
+    azuread = {
+      source = "hashicorp/azuread"
     }
   }
 }
@@ -15,3 +15,5 @@ provider "azurerm" {
 
   }
 }
+
+provider "azuread" {}
