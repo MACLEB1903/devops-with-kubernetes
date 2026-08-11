@@ -1,0 +1,104 @@
+name: Azure Automatic Deployment
+
+on: [push]
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  REGISTRY: "theprojectstep15acr.azurecr.io"
+  ACR_NAME: "theprojectstep15acr"
+  RESOURCE_GROUP: "e3.6-the-project-step-15"
+  AKS_CLUSTER: "tps15-aks"
+  NAMESPACE: "project"
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        include:
+          - image: todo-frontend
+            context: ./todo_app/frontend
+            dockerfile: ./todo_app/frontend/dockerfile
+
+          - image: todo-backend
+            context: ./todo_app/backend
+            dockerfile: ./todo_app/backend/dockerfile
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Authenticate to Azure
+        uses: azure/login@v3
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Login to ACR
+        run: |
+          az acr login \
+            --name "${{ env.ACR_NAME }}"
+
+      - name: Build and Push Image
+        uses: docker/build-push-action@v7
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: |
+            ${{ env.REGISTRY }}/${{ matrix.image }}:${{ github.sha }}
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Authenticate to Azure
+        uses: azure/login@v3
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Get AKS Credentials
+        run: |
+          az aks get-credentials \
+            --resource-group "${{ env.RESOURCE_GROUP }}" \
+            --name "${{ env.AKS_CLUSTER }}" \
+            --overwrite-existing
+
+      - name: Set Kubernetes Images
+        working-directory: ./todo_app/manifests
+        run: |
+          kustomize edit set image \
+            BACKEND/IMAGE=${{ env.REGISTRY }}/todo-backend:${{ github.sha }}
+
+          kustomize edit set image \
+            FRONTEND/IMAGE=${{ env.REGISTRY }}/todo-frontend:${{ github.sha }}
+
+      - name: Deploy Kubernetes Resources
+        run: |
+          kubectl apply -k ./todo_app/manifests
+
+      - name: Verify Backend Deployment
+        run: |
+          kubectl rollout status deployment/todo-backend-deployment \
+            --namespace "${{ env.NAMESPACE }}"
+
+      - name: Verify Frontend Deployment
+        run: |
+          kubectl rollout status deployment/todo-frontend-deployment \
+            --namespace "${{ env.NAMESPACE }}"
+
+      - name: Show Ingress
+        run: |
+          kubectl get ingress \
+            --namespace "${{ env.NAMESPACE }}"
