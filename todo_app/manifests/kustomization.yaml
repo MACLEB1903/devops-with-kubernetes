@@ -13,20 +13,5 @@ resources:
 
 
 images:
-  - name: IMAGE_WORKER/IMAGE
-    newName: theprojectstep14acr.azurecr.io/image-worker
-
-  - name: WIKIPEDIA_WORKER/IMAGE
-    newName: theprojectstep14acr.azurecr.io/wikipedia-worker
-
-  - name: IMAGE_BACKEND/IMAGE
-    newName: theprojectstep14acr.azurecr.io/image-backend
-
-  - name: TODO_FRONTEND/IMAGE
-    newName: theprojectstep14acr.azurecr.io/todo-frontend
-
-  - name: TODO_BACKEEND/IMAGE
-    newName: theprojectstep14acr.azurecr.io/todo-backend
-
   - name: POSTGRES/IMAGE
     newName: postgres:16-alpine

@@ -24,7 +24,7 @@ spec:
 
       containers:
         - name: image-worker
-          image: IMAGE_WORKER/IMAGE
+          image: BACKEND/IMAGE
           command: ["npm"]
           args: ["run", "image-worker"]
           env:
@@ -51,7 +51,7 @@ spec:
               mountPath: "/usr/src/app/files"
 
         - name: image-backend
-          image: IMAGE_BACKEND/IMAGE
+          image: BACKEND/IMAGE
           command: ["npm"]
           args: ["run", "image-backend"]
           ports:
@@ -75,8 +75,8 @@ spec:
               mountPath: "/usr/src/app/files"
 
         - name: todo-frontend
-          image: TODO_FRONTEND/IMAGE
-          imagePullPolicy: IfNotPresent
+          image: FRONTEND/IMAGE
+
           ports:
             - containerPort: 3000
           env:
@@ -113,12 +113,11 @@ spec:
 
     spec:
       containers:
-        - image: TODO_BACKEEND/IMAGE
+        - image: BACKEND/IMAGE
           name: todo-backend
           command: ["npm"]
           args: ["run", "todo-backend"]
-          imagePullPolicy: IfNotPresent
-
+          
           env:
             - name: PORT
               value: "3000"

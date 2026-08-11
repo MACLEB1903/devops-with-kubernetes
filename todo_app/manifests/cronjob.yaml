@@ -18,7 +18,7 @@ spec:
 
           containers:
             - name: wikipedia-worker-container
-              image: WIKIPEDIA_WORKER/IMAGE
+              image: BACKEND/IMAGE/IMAGE
               command: ["npm"]
               args: ["run", "wikipedia-worker"]
 
