@@ -2,22 +2,45 @@ name: Azure Automatic Deployment
 
 on:
   push:
-    paths:
-      - "todo_app/**"
 
 permissions:
   contents: read
   id-token: write
 
 env:
-  REGISTRY: "theprojectstep15acr.azurecr.io"
-  ACR_NAME: "theprojectstep15acr"
-  RESOURCE_GROUP: "e3.6-the-project-step-15"
-  AKS_CLUSTER: "tps15-aks"
-  NAMESPACE: "project"
+  REGISTRY: "theprojectstep16acr.azurecr.io"
+  ACR_NAME: "theprojectstep16acr"
+  RESOURCE_GROUP: "e3.7-the-project-step-16"
+  AKS_CLUSTER: "tps16-aks"
 
 jobs:
+  check-the-branch:
+    runs-on: ubuntu-latest
+
+    outputs:
+      namespace: ${{ steps.branch.outputs.namespace }}
+
+    steps:
+      - name: Verify the branch name
+        id: branch
+        run: |
+          branch="${GITHUB_REF#refs/heads/}"
+
+          if [ -z "$branch" ]; then
+            echo "Branch name is empty."
+            exit 1
+          fi
+
+          if [ "$branch" = "main" ]; then
+            namespace="project"
+          else
+            namespace="$branch"
+          fi
+
+          echo "namespace=$namespace" >> "$GITHUB_OUTPUT"
+
   build-and-push:
+    needs: check-the-branch
     runs-on: ubuntu-latest
 
     strategy:
@@ -57,7 +80,10 @@ jobs:
             ${{ env.REGISTRY }}/${{ matrix.image }}:${{ github.sha }}
 
   deploy:
-    needs: build-and-push
+    needs: 
+      - build-and-push
+      - check-the-branch
+
     runs-on: ubuntu-latest
 
     steps:
@@ -89,19 +115,21 @@ jobs:
 
       - name: Deploy Kubernetes Resources
         run: |
-          kubectl apply -k ./todo_app/manifests
+          kubectl create namespace "${{ needs.check-the-branch.outputs.namespace }}" \
+            --dry-run=client -o yaml | kubectl apply -f -
+          kubectl apply -k ./todo_app/manifests --namespace "${{ needs.check-the-branch.outputs.namespace }}"
 
       - name: Verify Backend Deployment
         run: |
           kubectl rollout status deployment/todo-backend-deployment \
-            --namespace "${{ env.NAMESPACE }}"
+            --namespace "${{ needs.check-the-branch.outputs.namespace }}"
 
       - name: Verify Frontend Deployment
         run: |
           kubectl rollout status deployment/todo-frontend-deployment \
-            --namespace "${{ env.NAMESPACE }}"
+            --namespace "${{ needs.check-the-branch.outputs.namespace }}"
 
       - name: Show Ingress
         run: |
           kubectl get ingress \
-            --namespace "${{ env.NAMESPACE }}"
+            --namespace "${{ needs.check-the-branch.outputs.namespace }}"
