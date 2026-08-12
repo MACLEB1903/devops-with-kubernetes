@@ -8,10 +8,10 @@ permissions:
   id-token: write
 
 env:
-  REGISTRY: "theprojectstep16acr.azurecr.io"
-  ACR_NAME: "theprojectstep16acr"
-  RESOURCE_GROUP: "e3.7-the-project-step-16"
-  AKS_CLUSTER: "tps16-aks"
+  REGISTRY: "theprojectstep17acr.azurecr.io"
+  ACR_NAME: "theprojectstep17acr"
+  RESOURCE_GROUP: "e3.8-the-project-step-17"
+  AKS_CLUSTER: "tps17-aks"
 
 jobs:
   check-the-branch:

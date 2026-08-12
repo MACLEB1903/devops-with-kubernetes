@@ -13,8 +13,8 @@ terraform apply --auto-approve
 
 # Connect kubectl to the AKS cluster.
 az aks get-credentials \
---resource-group e3.7-the-project-step-16 \
---name tps16-aks --overwrite-existing
+--resource-group e3.8-the-project-step-17 \
+--name tps17-aks --overwrite-existing
 
 # Log the azure credentials.
 AZURE_TENANT_ID=$(az account show --query tenantId -o tsv)
