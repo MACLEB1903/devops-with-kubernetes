@@ -65,3 +65,4 @@ This directory is a collection of all the projects submitted for the course [Dev
 ### 2. Deployment Pipeline
 - [3.5](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.5): The project, Step 14
 - [3.6](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.6): The project, Step 15
+- [3.7](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.7): The project, Step 16

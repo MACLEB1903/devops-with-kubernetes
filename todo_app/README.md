@@ -1,8 +1,7 @@
-# 3.6 The Project, Step 15
+# 3.7 The Project, Step 16
 
-Setup automatic deployment for the project as well.
+Improve the deployment so that each branch creates a separate environment. The main branch should still be deployed in the namespace project. Your solution may assume that branches are named so that they are valid namespace names.
 
-If your pod uses a Persistent Volume Claim access mode ReadWriteOnce(opens in a new tab), you may need to consider the deployment strategy(opens in a new tab), since the default (RollingUpdate) may cause problems. Read more from the documentation(opens in a new tab). The other option is to use an access mode(opens in a new tab) that allows many pods to mount the volume.
 ### How to run:
 
 NOTE: This exercise uses Azure resources and Terraform. Make sure you have an active Azure account, an available subscription, and permission to create resources. To install Terraform, follow the official [HashiCorp installation guide.](https://developer.hashicorp.com/terraform/install?utm_source=chatgpt.com)
@@ -21,11 +20,17 @@ AZURE_CLIENT_ID
 AZURE_TENANT_ID
 AZURE_SUBSCRIPTION_ID
 ```
-
 ```bash
-# Push the application.
-```
 
+# Push the application.
+
+# NOTE: An error might occur if the GitHub branch name does not match the resource group name.
+# client-id.tf automatically replaces "." with "-" in the resource group name.
+
+# NOTE: In this example, we used:
+#   Branch Name: e3-7-the-project-step-16
+#   Resource Group Name: e3.7-the-project-step-16
+```
 ### How to test:
 
 To test this application, execute the following commands in your command-line.
