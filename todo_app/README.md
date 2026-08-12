@@ -61,7 +61,6 @@ http://10.234.56.78/todos
 git push origin --delete e3-8-the-project-step-17
 ```
 
-
 ```bash
 # NOTE: Remember to destroy the resources afterward.
 cd terraform
