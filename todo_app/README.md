@@ -1,6 +1,10 @@
-# 3.11 The Project, Step 19
+# 3.12 The Project, Step 20
 
-Set sensible resource requests and limits for the project. The exact values are not important. Just test what works. You may find the command kubectl top pods useful.
+GKE includes monitoring systems already so we can just enable the monitoring.
+
+Read the documentation for Kubernetes Engine Monitoring here(opens in a new tab). Find out how to find the application logs for the project in GKE.
+
+Add to your repository a picture of the logs when a new todo is created.
 
 ### How to run:
 
@@ -11,11 +15,6 @@ To run this application, execute the following commands in your command-line.
 ```bash
 # Run the script.
 ./script.sh
-```
-
-```bash
-# Add the BLOB_URL to the secret.yaml bu running:
-printf '%s' "$(terraform output -raw BACKUP_BLOB_SAS_URL)" | base64 -w 0; echo
 ```
 
 ### How to test:
@@ -36,6 +35,18 @@ todo-ingress   webapprouting.kubernetes.azure.com  *       10.234.56.78   80    
 http://10.234.56.78/
 http://10.234.56.78/todos
 ```
+
+### How to check the logs:
+
+```bash
+# Visit the Azure Portal to see the logs.
+# 1. Go to portal.azure.com.
+# 2. Open your AKS cluster.
+# 3. Go to Monitoring > Logs.
+# 4. Run a query to view the application logs.
+```
+
+![Logs](./image_logs.png)
 
 ```bash
 # NOTE: Remember to destroy the resources afterward.
