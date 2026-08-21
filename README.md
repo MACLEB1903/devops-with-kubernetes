@@ -72,4 +72,4 @@ This directory is a collection of all the projects submitted for the course [Dev
 - [3.9](https://github.com/MACLEB1903/devops-with-kubernetes/blob/main/DBaaS_vs_DIY.md): DBaaS vs DIY
 - [3.10](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.10): The Project, Step 18
 - [3.11](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.11): The Project, Step 19
-- [3.20](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.12): The Project, Step 20
+- [3.12](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.12): The Project, Step 20
