@@ -1,6 +1,8 @@
-# 3.8 The Project, Step 17
+# 3.10 The Project, Step 18
 
-Improve the deployment so that each branch creates a separate environment. The main branch should still be deployed in the namespace project. Your solution may assume that branches are named so that they are valid namespace names.
+In part 3 we did a Job that made a backup of our Database using the command pg_dump. Unfortunately, the backup was not saved anywhere. Create now a CronJob that makes a backup of your todo database (once per 24 hours) and saves it to Google Object Storage(opens in a new tab).
+
+In this exercise, you can create the secret for the cloud access from the command line, thus, there is no need to create it in the GitHub action.
 
 ### How to run:
 
