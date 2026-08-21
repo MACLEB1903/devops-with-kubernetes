@@ -24,3 +24,6 @@ Thumbs.db
 .terraform*
 *.tfstate
 *.tfstate.*
+
+secret.yaml
+secret*

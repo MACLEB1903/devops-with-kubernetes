@@ -11,17 +11,37 @@ terraform init
 terraform plan
 terraform apply --auto-approve
 
+cd ..
+
+# Build the application images.
+docker compose -f todo_app/compose.yaml build
+
+# Log in using the ACR resource name, not its full domain.
+az acr login --name dwkacr
+
+# Tag the local images for ACR.
+docker tag todo-backend:latest \
+  dwkacr.azurecr.io/todo-backend:latest
+
+docker tag todo-frontend:latest \
+  dwkacr.azurecr.io/todo-frontend:latest
+
+docker tag todo-backup:latest \
+  dwkacr.azurecr.io/todo-backup:latest
+
+# Push the images to ACR.
+docker push dwkacr.azurecr.io/todo-backend:latest
+docker push dwkacr.azurecr.io/todo-frontend:latest
+docker push dwkacr.azurecr.io/todo-backup:latest
+
 # Connect kubectl to the AKS cluster.
 az aks get-credentials \
---resource-group e3.8-the-project-step-17 \
---name tps17-aks --overwrite-existing
+  --resource-group e3.10-the-project-step-18 \
+  --name dwk-aks \
+  --overwrite-existing
 
-# Log the azure credentials.
-AZURE_TENANT_ID=$(az account show --query tenantId -o tsv)
-AZURE_SUBSCRIPTION_ID=$(az account show --query id -o tsv)
+printf '%s' "$(terraform output -raw BACKUP_BLOB_SAS_URL)" | base64 -w 0; echo
 
-printf "\nAZURE_TENANT_ID = $AZURE_TENANT_ID
-AZURE_SUBSCRIPTION_ID = $AZURE_SUBSCRIPTION_ID"
-
-printf "\n\nAdd the following variables as GitHub Secrets:\n"
-printf "AZURE_CLIENT_ID\nAZURE_TENANT_ID\nAZURE_SUBSCRIPTION_ID\n"
+kubectl create namespace e3-10-the-project-step-18
+kubectl config set-context --current --namespace=e3-10-the-project-step-18
+kubectl apply -k todo_app/manifests

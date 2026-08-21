@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: wikipedia-cronjob
 spec:
-  schedule: "0 * * * *"
+  schedule: "* * * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   concurrencyPolicy: Forbid
@@ -17,7 +17,8 @@ spec:
 
           containers:
             - name: wikipedia-worker-container
-              image: BACKEND/IMAGE/IMAGE
+              image: BACKEND/IMAGE
+
               command: ["npm"]
               args: ["run", "wikipedia-worker"]
 
@@ -33,3 +34,74 @@ spec:
                     configMapKeyRef:
                       name: todo-configmap
                       key: TODOS_FETCH_URL
+
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: pg-backup-cronjob
+
+spec:
+  schedule: "* * * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid
+  
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+
+          containers:
+            - name: pg-backup-container
+              image: BACKUP/IMAGE
+
+              command: ["sh", "-c"]
+
+              env:
+                - name: PGUSER
+                  valueFrom:
+                    configMapKeyRef:
+                      name: todo-database-configmap
+                      key: POSTGRES_USER
+
+                - name: PGHOST
+                  valueFrom:
+                    configMapKeyRef:
+                      name: todo-database-configmap
+                      key: POSTGRES_HOST
+
+                - name: PGPORT
+                  valueFrom:
+                    configMapKeyRef:
+                      name: todo-database-configmap
+                      key: POSTGRES_PORT
+
+                - name: PGDATABASE
+                  valueFrom:
+                    configMapKeyRef:
+                      name: todo-database-configmap
+                      key: POSTGRES_DB
+
+                - name: PGPASSWORD
+                  valueFrom:
+                    configMapKeyRef:
+                      name: todo-database-configmap
+                      key: POSTGRES_PASSWORD
+
+                - name: BLOB_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: pg-backup-secret
+                      key: BLOB_URL
+
+              args:
+              - |
+                pg_dump \
+                  -h "$PGHOST" \
+                  -p "$PGPORT" \
+                  -U "$PGUSER" \
+                  -d "$PGDATABASE" \
+                  -f /backup/backup.sql &&
+                azcopy copy /backup/backup.sql "$BLOB_URL"

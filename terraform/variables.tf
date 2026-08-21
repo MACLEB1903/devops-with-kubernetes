@@ -1,6 +1,6 @@
 variable "resource_group" {
   description = "Name of the Azure resource group where resources will be deployed."
-  default     = "e3.8-the-project-step-17"
+  default     = "e3.10-the-project-step-18"
   type        = string
 }
 
@@ -11,11 +11,11 @@ variable "location" {
 }
 
 variable "acr" {
-  type = string
-  default = "theprojectstep17acr"
+  type    = string
+  default = "dwkacr"
 }
 
 variable "aks" {
-  type = string
-  default = "tps17-aks"
+  type    = string
+  default = "dwk-aks"
 }

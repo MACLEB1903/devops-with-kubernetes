@@ -1,3 +1,4 @@
+/*
 resource "azuread_application" "github_actions" {
   display_name = "todo-github-actions"
 }
@@ -38,3 +39,5 @@ resource "azurerm_role_assignment" "github_actions" {
 }
 
 data "azurerm_client_config" "current" {}
+
+*/
