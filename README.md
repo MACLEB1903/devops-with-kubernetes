@@ -66,8 +66,9 @@ This directory is a collection of all the projects submitted for the course [Dev
 - [3.5](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.5): The project, Step 14
 - [3.6](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.6): The project, Step 15
 - [3.7](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.7): The project, Step 16
-- [3.8](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.7): The project, Step 17
+- [3.8](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.8): The project, Step 17
 
 ### 3. GKE Features
 - [3.9](https://github.com/MACLEB1903/devops-with-kubernetes/blob/main/DBaaS_vs_DIY.md): DBaaS vs DIY
-- [3.10](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.7): The Project, Step 18
+- [3.10](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.10): The Project, Step 18
+- [3.11](https://github.com/MACLEB1903/devops-with-kubernetes/tree/3.11): The Project, Step 19

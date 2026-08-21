@@ -1,8 +1,6 @@
-# 3.10 The Project, Step 18
+# 3.11 The Project, Step 19
 
-In part 3 we did a Job that made a backup of our Database using the command pg_dump. Unfortunately, the backup was not saved anywhere. Create now a CronJob that makes a backup of your todo database (once per 24 hours) and saves it to Google Object Storage(opens in a new tab).
-
-In this exercise, you can create the secret for the cloud access from the command line, thus, there is no need to create it in the GitHub action.
+Set sensible resource requests and limits for the project. The exact values are not important. Just test what works. You may find the command kubectl top pods useful.
 
 ### How to run:
 

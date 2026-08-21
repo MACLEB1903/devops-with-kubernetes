@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: todo-rq
+spec:
+  hard:
+    requests.cpu: "250Mi"
+    requests.memory: "250Mi"
+    limits.cpu: "250Mi"
+    limits.memory: "500Mi"
+    pods: "10"
