@@ -14,34 +14,35 @@ terraform apply --auto-approve
 cd ..
 
 # Build the application images.
-docker compose -f todo_app/compose.yaml build
+docker compose -f log_output/compose.yaml build
+docker compose -f pingpong/compose.yaml build
 
 # Log in using the ACR resource name, not its full domain.
 az acr login --name dwkacr
 
 # Tag the local images for ACR.
-docker tag todo-backend:latest \
-  dwkacr.azurecr.io/todo-backend:latest
+docker tag log-generator:latest \
+  dwkacr.azurecr.io/log-generator:latest
 
-docker tag todo-frontend:latest \
-  dwkacr.azurecr.io/todo-frontend:latest
+docker tag log-reader:latest \
+  dwkacr.azurecr.io/log-reader:latest
 
-docker tag todo-backup:latest \
-  dwkacr.azurecr.io/todo-backup:latest
+docker tag pingpong-backend:latest \
+  dwkacr.azurecr.io/pingpong-backend:latest
 
 # Push the images to ACR.
-docker push dwkacr.azurecr.io/todo-backend:latest
-docker push dwkacr.azurecr.io/todo-frontend:latest
-docker push dwkacr.azurecr.io/todo-backup:latest
+docker push dwkacr.azurecr.io/log-generator:latest
+docker push dwkacr.azurecr.io/log-reader:latest
+docker push dwkacr.azurecr.io/pingpong-backend:latest
 
 # Connect kubectl to the AKS cluster.
 az aks get-credentials \
-  --resource-group e3.10-the-project-step-18 \
+  --resource-group e4-1-readiness-probe \
   --name dwk-aks \
   --overwrite-existing
 
-printf '%s' "$(terraform output -raw BACKUP_BLOB_SAS_URL)" | base64 -w 0; echo
-
-kubectl create namespace e3-10-the-project-step-18
-kubectl config set-context --current --namespace=e3-10-the-project-step-18
-kubectl apply -k todo_app/manifests
+# Apply the manifests
+kubectl create namespace exercises
+kubectl config set-context --current --namespace=exercises
+kubectl apply -k log_output/manifests
+kubectl apply -k pingpong/manifests

@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: log-reader-container
-          image: rewrittenroutingacr.azurecr.io/log-reader
+          image: LOG-READER/IMAGE
 
           env:
             - name: PORT
@@ -45,8 +45,17 @@ spec:
             - name: config-volume
               mountPath: /usr/src/app/files
               readOnly: true
+
           ports:
             - containerPort: 3000
+
+          readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            httpGet:
+              path: "http://pingpong-api-svc:80/"
+              port: 3000
+
 
       volumes:
         - name: config-volume
@@ -74,7 +83,7 @@ spec:
     spec:
       containers:
         - name: log-generator-container
-          image: rewrittenroutingacr.azurecr.io/log-generator
+          image: LOG-GENERATOR/IMAGE
 
           env:
             - name: PORT

@@ -1,3 +1,5 @@
+/*
+
 resource "azurerm_storage_account" "storage_account" {
   name                = "dwkstorageacc"
   resource_group_name = var.resource_group
@@ -29,3 +31,5 @@ data "azurerm_storage_account_blob_container_sas" "backup_sas" {
     list   = false
   }
 }
+
+*/

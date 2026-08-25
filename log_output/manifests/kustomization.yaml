@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- configmap.yaml
+- deployment.yaml
+- gateway.yaml
+- httproute.yaml
+- namespace.yaml
+- service.yaml
+
+images:
+  - name: LOG-READER/IMAGE
+    newName: dwkacr.azurecr.io/log-reader
+
+  - name: LOG-GENERATOR/IMAGE
+    newName: dwkacr.azurecr.io/log-generator

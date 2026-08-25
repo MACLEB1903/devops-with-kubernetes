@@ -1,6 +1,6 @@
 variable "resource_group" {
   description = "Name of the Azure resource group where resources will be deployed."
-  default     = "e3.10-the-project-step-18"
+  default     = "e4-1-readiness-probe"
   type        = string
 }
 

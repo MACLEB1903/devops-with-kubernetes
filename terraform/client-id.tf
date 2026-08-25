@@ -1,4 +1,5 @@
 /*
+
 resource "azuread_application" "github_actions" {
   display_name = "todo-github-actions"
 }

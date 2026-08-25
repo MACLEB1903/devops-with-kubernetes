@@ -1,10 +1,11 @@
-# 3.4 Rewritten routing
+# 4.1 Readiness Probe
 
-Your ping-pong app now most likely needs to respond to the URL /pingpong to work in the cluster setup. It would be nice if we were not forced to reflect the cluster-level URL structures in the applications, and instead, the app itself could provide the behavior in the root path /. Thanks to the flexibility of the Gateway API, this can be easily done by route rewriting.
+Create a ReadinessProbe for the Ping-pong application. It should be ready when it has a connection to the database.
+And another ReadinessProbe for Log output application. It should be ready when it can receive data from the Ping-pong application.
 
 ### How to run:
 
-NOTE: This exercise uses Azure resources and Terraform. Make sure you have an active Azure account, an available subscription, and permission to create resources. To install Terraform, follow the official [HashiCorp installation guide.](https://developer.hashicorp.com/terraform/install?utm_source=chatgpt.com)
+NOTE: This exercise uses Azure resources and Terraform. Make sure you have an active Azure account, an available subscription, and permission to create resources. To install Terraform, follow the official [HashiCorp installation guide.](https://developer.hashicorp.com/terraform/install?utm_source)
 
 To run this application, execute the following commands in your command-line.
 

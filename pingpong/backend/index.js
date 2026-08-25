@@ -30,6 +30,15 @@ app.get("/", async (req, res) => {
   }
 });
 
+app.get("/ready", async (req, res) => {
+  try {
+    await client.query("SELECT 1");
+    res.status(200).send("Ready")
+  }
+  catch(error)
+  {res.status(500).send("Database is unavailable.")}
+})
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

@@ -17,10 +17,16 @@ spec:
     spec:
       containers:
         - name: pingpong-api-container
-          image: rewrittenroutingacr.azurecr.io/pingpong-backend
-
+          image: PINGPONG-API/IMAGE
           ports:
             - containerPort: 3000
+
+          readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            httpGet:
+              path: /ready
+              port: 3000
 
           env:
             - name: PORT
