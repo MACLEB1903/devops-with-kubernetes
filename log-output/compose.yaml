@@ -1,0 +1,5 @@
+services:
+  log-output:
+    build: .
+    image: log-output
+    container_name: log-output
