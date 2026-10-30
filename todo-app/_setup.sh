@@ -13,9 +13,3 @@ docker images | grep todo-app
 
 # Import the Docker image into the cluster.
 k3d image import todo-app:latest -c exercise-1-2
-
-# Deploy the application to Kubernetes.
-kubectl run todo-app \
-  --image=todo-app:latest \
-  --image-pull-policy=IfNotPresent \
-  --env=PORT=8080

@@ -15,6 +15,12 @@ To run this application, execute the following commands in your command-line.
 chmod +x ./_setup.sh
 ./_setup.sh
 
+# Deploy the application to Kubernetes.
+kubectl run todo-app \
+  --image=todo-app:latest \
+  --image-pull-policy=IfNotPresent \
+  --env=PORT=8080
+
 # Forward local port 3000 to port 8080 inside the Kubernetes Pod.
 kubectl port-forward todo-app 3000:8080
 ```
