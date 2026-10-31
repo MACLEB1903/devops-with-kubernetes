@@ -1,13 +1,8 @@
-# Exercise 1.1: Getting started
+# Exercise 1.3: Declarative Approach
 
-Create an application that generates a random string on startup, stores this string into memory, and outputs it every 5 seconds with a timestamp.
+In your `"Log output"` application, create a folder for manifests and move your deployment into a declarative file.
 
-```code
-2020-03-30T12:15:17.705Z: 8523ecb1-c716-4cb6-a044-b9e83bb98e43
-2020-03-30T12:15:22.705Z: 8523ecb1-c716-4cb6-a044-b9e83bb98e43
-```
-
-Deploy it into your Kubernetes cluster and confirm that it's running with kubectl logs. You will keep building this application in future exercises. This application will be called `Log output`.
+Make sure everything still works by restarting and following logs.
 
 ---
 
@@ -16,10 +11,15 @@ Deploy it into your Kubernetes cluster and confirm that it's running with kubect
 To run this application, execute the following commands in your command-line.
 
 ```bash
+# Run the application setup script.
 chmod +x ./_setup.sh
 ./_setup.sh
+
+# Deploy the application to Kubernetes.
+kubectl apply -f manifests/deployments.yaml
 ```
 
+kubect
 ---
 
 ### How to test:
@@ -27,7 +27,13 @@ chmod +x ./_setup.sh
 To test this application, execute the following commands in your command-line.
 
 ```bash
-kubectl logs pods/log-output -f
+# View the application logs.
+kubectl logs deployments/log-output -f
+
+# You should see output similar to the following:
+2026-10-31T05:03:23.373Z: e3b57820-a191-4c23-91d0-051a6dd70dd0
+2026-10-31T05:03:28.376Z: 5a9ba961-3d97-4891-812b-30c87c96a6e8
+2026-10-31T05:03:33.379Z: e094886b-bc88-4949-81bf-e09f14518e59
 ```
 
 ---
