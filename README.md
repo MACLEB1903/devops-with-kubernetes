@@ -9,3 +9,4 @@ This directory is a collection of all the projects submitted for the course [Dev
 - [1.1: Getting Started](https://github.com/MACLEB1903/devops-with-kubernetes/tree/1.1)
 - [1.2: The Project, Step 1](https://github.com/MACLEB1903/devops-with-kubernetes/tree/1.2)
 - [1.3: Declarative Approach](https://github.com/MACLEB1903/devops-with-kubernetes/tree/1.3)
+- [1.4: The Project, Step 2](https://github.com/MACLEB1903/devops-with-kubernetes/tree/1.4)
