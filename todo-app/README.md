@@ -1,10 +1,6 @@
-# Exercise 1.5: The Project, Step 3
+# Exercise 1.6: The Project, Step 4
 
-Make the project respond something to a `GET` request sent to the / url of the project. A simple HTML page is good, or you can deploy something more complex, like a single-page application.
-
-See [here](https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/) how you can define environment variables for containers.
-
-Use `kubectl port-forward` to confirm that the project is accessible and works in the cluster by using a browser to access the project.
+Use a NodePort Service to enable access to the project.
 
 ---
 
@@ -18,10 +14,7 @@ chmod +x ./_setup.sh
 ./_setup.sh
 
 # Deploy the application to Kubernetes.
-kubectl apply -f manifests/deployments.yaml
-
-# Forward local port 3000 to port 8080 in the Pod.
-kubectl port-forward deployments/todo-app 3000:8080
+kubectl apply -f manifests/
 ```
 
 ---

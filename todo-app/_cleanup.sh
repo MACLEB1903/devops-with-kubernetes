@@ -4,7 +4,7 @@
 cd && cd devops-with-kubernetes/todo-app
 
 # Delete the Kubernetes cluster created for this exercise.
-k3d cluster delete exercise-1-5
+k3d cluster delete exercise-1-6
 
 # Remove the locally built Docker image.
 docker rmi todo-app:latest

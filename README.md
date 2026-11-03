@@ -13,3 +13,4 @@ This directory is a collection of all the projects submitted for the course [Dev
 
 ### 3. Introduction to Networking
 - [1.5: The Project, Step 3](https://github.com/MACLEB1903/devops-with-kubernetes/tree/1.5)
+- [1.6: The Project, Step 4](https://github.com/MACLEB1903/devops-with-kubernetes/tree/1.6)
