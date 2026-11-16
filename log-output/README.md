@@ -1,8 +1,10 @@
-# Exercise 1.3: Declarative Approach
+# Exercise 1.7: External Access with Ingress
 
-In your `"Log output"` application, create a folder for manifests and move your deployment into a declarative file.
+"Log output" application currently outputs a timestamp and a random string (that it creates on startup) to the logs.
 
-Make sure everything still works by restarting and following logs.
+Add an endpoint to request the current status (timestamp and the random string) and an Ingress so that you can access it with a browser.
+
+You can just store the random string to the memory.
 
 ---
 
@@ -16,24 +18,23 @@ chmod +x ./_setup.sh
 ./_setup.sh
 
 # Deploy the application to Kubernetes.
-kubectl apply -f manifests/deployments.yaml
+kubectl apply -f manifests/
+
+#Expose port 80 of the k3d cluster on host port 4000.
+k3d cluster edit exercise-1-7 --port-add "4000:80"@server:0
 ```
 
-kubect
----
+## kubect
 
 ### How to test:
 
 To test this application, execute the following commands in your command-line.
 
 ```bash
-# View the application logs.
-kubectl logs deployments/log-output -f
-
-# You should see output similar to the following:
-2026-10-31T05:03:23.373Z: e3b57820-a191-4c23-91d0-051a6dd70dd0
-2026-10-31T05:03:28.376Z: 5a9ba961-3d97-4891-812b-30c87c96a6e8
-2026-10-31T05:03:33.379Z: e094886b-bc88-4949-81bf-e09f14518e59
+# 1. Open http://localhost:4000 in your browser, or
+#    run curl http://localhost:4000 in your terminal.
+# 2. You should see output similar to the following:
+# 2026-11-16T20:15:29.264Z: a87fe32a-5b26-4bd0-8b66-3d87a909e4ed
 ```
 
 ---
