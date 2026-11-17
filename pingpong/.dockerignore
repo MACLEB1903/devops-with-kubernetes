@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+
+# Version control
+.git/
+.gitignore
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Test coverage
+coverage/
+
+# Build outputs
+dist/
+build/
+.next/
+
+# Editor and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local setup and cleanup scripts
+_setup.sh
+_cleanup.sh
+
+# Documentation
+README.md

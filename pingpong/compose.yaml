@@ -1,0 +1,4 @@
+services:
+  pingpong:
+    image: pingpong
+    build: .
