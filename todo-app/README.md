@@ -1,6 +1,6 @@
-# Exercise 1.6: The Project, Step 4
+# Exercise 1.8: The Project, Step 5
 
-Use a NodePort Service to enable access to the project.
+Switch to using Ingress instead of `NodePort` to access the project. You can delete the Ingress of the `Log output` application so they don't interfere with this exercise. We'll look more into paths and routing in the next exercise, and at that point, you can configure the project to run with the `Log output` application side by side.
 
 ---
 
@@ -15,6 +15,9 @@ chmod +x ./_setup.sh
 
 # Deploy the application to Kubernetes.
 kubectl apply -f manifests/
+
+#Expose port 80 of the k3d cluster on host port 8080.
+k3d cluster edit exercise-1-8 --port-add "8080:80"@loadbalancer
 ```
 
 ---
@@ -24,7 +27,7 @@ kubectl apply -f manifests/
 To test this application, execute the following commands in your command-line.
 
 ```bash
-# 1. Open http://localhost:3000 in your browser.
+# 1. Open http://localhost:8080 in your browser.
 # 2. You should see the following output:
 # Server started in port 8080
 ```

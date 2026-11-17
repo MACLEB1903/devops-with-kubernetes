@@ -7,8 +7,6 @@ spec:
     app: todo-app
   type: NodePort
   ports:
-  - name: "8080"
-    nodePort: 32767
-    port: 80
-    protocol: TCP
-    targetPort: 8080
+    - port: 80
+      protocol: TCP
+      targetPort: 8080
