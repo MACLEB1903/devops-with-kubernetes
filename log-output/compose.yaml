@@ -1,5 +1,29 @@
 services:
+  log-generator:
+    container_name: log-generator
+    image: log-generator
+    build:
+      context: ./app/generator/
+      dockerfile: Dockerfile
+    working_dir: /files
+    volumes:
+      - log-output:/files
+
+  log-reader:
+    depends_on:
+      - log-generator
+    container_name: log-reader
+    image: log-reader
+    build:
+      context: ./app/reader
+      dockerfile: Dockerfile
+    environment:
+      - PORT=4000
+    ports:
+      - 4000:4000
+    working_dir: /files
+    volumes:
+      - log-output:/files
+
+volumes:
   log-output:
-    build: .
-    image: log-output
-    container_name: log-output

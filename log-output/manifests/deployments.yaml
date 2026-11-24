@@ -11,12 +11,28 @@ spec:
       labels:
         app: log-output
     spec:
+      volumes:
+        - name: log-output-volumes
+          emptyDir: {}
+
       containers:
-        - name: log-output
-          image: log-output:latest
+        - name: log-generator
+          image: log-generator:latest
+          imagePullPolicy: IfNotPresent
+          workingDir: /files
+          volumeMounts:
+            - name: log-output-volumes
+              mountPath: /files
+
+        - name: log-reader
+          image: log-reader:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: PORT
               value: "4000"
           ports:
             - containerPort: 4000
+          workingDir: /files
+          volumeMounts:
+            - name: log-output-volumes
+              mountPath: /files

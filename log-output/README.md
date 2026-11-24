@@ -1,10 +1,12 @@
-# Exercise 1.7: External Access with Ingress
+# Exercise 1.10: Even More Services
 
-"Log output" application currently outputs a timestamp and a random string (that it creates on startup) to the logs.
+Split the `Log output` application into two different containers within a single pod:
 
-Add an endpoint to request the current status (timestamp and the random string) and an Ingress so that you can access it with a browser.
+- One generates a random string on startup and writes a line with the random string and timestamp every 5 seconds into a file.
 
-You can just store the random string to the memory.
+- The other reads that file and provides the content in the `HTTP GET` endpoint for the user to see
+
+You may find [this](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_logs/) helpful now since there are more than one container running inside a pod.
 
 ---
 
@@ -21,10 +23,8 @@ chmod +x ./_setup.sh
 kubectl apply -f manifests/
 
 #Expose port 80 of the k3d cluster on host port 4000.
-k3d cluster edit exercise-1-7 --port-add "4000:80"@server:0
+k3d cluster edit exercise-1-10 --port-add "4000:80"@server:0
 ```
-
-## kubect
 
 ### How to test:
 
