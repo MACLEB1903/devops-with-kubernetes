@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import express, { type Express, type Request, type Response } from "express";
 
 const PORT = process.env.PORT;
@@ -7,9 +8,13 @@ let pong = 0;
 
 app.get("/pingpong", (req: Request, res: Response) => {
   pong++;
-  res.send(`PONG: ${pong}`);
+  const response = `Ping / Pongs: ${pong}`;
+
+  fs.writeFileSync("pong.txt", response);
+  res.send(response);
 });
 
 app.listen(PORT, () => {
+  console.log("Pingpong started.");
   console.log(`Server is runnig on port: ${PORT}`);
 });

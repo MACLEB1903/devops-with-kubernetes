@@ -4,13 +4,18 @@ import express from "express";
 const PORT = process.env.PORT;
 const app = express();
 
+const readFile = async (filename) => {
+  return await fs.readFileSync(filename, "utf-8");
+};
+
 app.get("/", async (req, res) => {
   try {
-    const data = fs.readFileSync("log.txt", "utf-8");
-    res.send(data);
+    const log = await readFile("log.txt");
+    const pong = await readFile("pong.txt");
+
+    res.type("text/plain").send(`${log}\n${pong}`);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error reading file.");
   }
 });
 

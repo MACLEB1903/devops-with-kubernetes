@@ -1,9 +1,19 @@
-FROM node:alpine
+FROM node:alpine AS builder
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
 COPY . .
 
-CMD ["node", "index.ts"]
+
+FROM node:alpine
+WORKDIR /usr/src/app
+
+RUN adduser -D appuser
+
+COPY --from=builder --chown=appuser:appuser /usr/src/app /usr/src/app
+
+USER appuser
+
+CMD ["node", "/usr/src/app/index.ts"]

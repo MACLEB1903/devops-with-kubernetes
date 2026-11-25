@@ -1,12 +1,15 @@
-# Exercise 1.10: Even More Services
+# Exercise 1.11: Persisting Data
 
-Split the `Log output` application into two different containers within a single pod:
+Let's share data between `Ping-pong` and `Log output` applications using persistent volumes.
 
-- One generates a random string on startup and writes a line with the random string and timestamp every 5 seconds into a file.
+Create both a `PersistentVolume` and `PersistentVolumeClaim` and alter the Deployment to utilize it. As PersistentVolumes are often maintained by cluster administrators rather than developers and those are not application specific you should keep the definition for those separated, perhaps in own folder.
 
-- The other reads that file and provides the content in the `HTTP GET` endpoint for the user to see
+Save the number of requests to the `Ping-pong` application into a file in the volume and output it with the timestamp and the random string when sending a request to our `Log output` application. In the end, the two pods should share a persistent volume between the two applications. So the browser should display the following when accessing the `Log output` application:
 
-You may find [this](https://kubernetes.io/docs/reference/kubectl/generated/kubectl_logs/) helpful now since there are more than one container running inside a pod.
+```bash
+2020-03-30T12:15:17.705Z: 8523ecb1-c716-4cb6-a044-b9e83bb98e43.
+Ping / Pongs: 3
+```
 
 ---
 
@@ -15,15 +18,32 @@ You may find [this](https://kubernetes.io/docs/reference/kubectl/generated/kubec
 To run this application, execute the following commands in your command-line.
 
 ```bash
-# Run the application setup script.
+# Run the setup script for log-output.
+cd && cd devops-with-kubernetes/log-output
 chmod +x ./_setup.sh
 ./_setup.sh
 
-# Deploy the application to Kubernetes.
+# Run the setup script for pingpong.
+cd && cd devops-with-kubernetes/pingpong
+chmod +x ./_setup.sh
+./_setup.sh
+
+# Create a directory on the Kubernetes node for the PersistentVolume.
+docker exec k3d-exercise-1-11-server-0 mkdir -p /tmp/kube
+
+# Deploy the log-output to Kubernetes.
+cd && cd devops-with-kubernetes/log-output
+kubectl apply -f manifests/
+
+# Deploy the pingpong to Kubernetes.
+cd && cd devops-with-kubernetes/pingpong
 kubectl apply -f manifests/
 
 #Expose port 80 of the k3d cluster on host port 4000.
-k3d cluster edit exercise-1-10 --port-add "4000:80"@server:0
+k3d cluster edit exercise-1-11 --port-add "4000:80"@loadbalancer
+
+#Expose port 80 of the k3d cluster on host port 3000.
+k3d cluster edit exercise-1-11 --port-add "3000:80"@loadbalancer
 ```
 
 ### How to test:
@@ -31,10 +51,16 @@ k3d cluster edit exercise-1-10 --port-add "4000:80"@server:0
 To test this application, execute the following commands in your command-line.
 
 ```bash
-# 1. Open http://localhost:4000 in your browser, or
-#    run curl http://localhost:4000 in your terminal.
-# 2. You should see output similar to the following:
-# 2026-11-16T20:15:29.264Z: a87fe32a-5b26-4bd0-8b66-3d87a909e4ed
+# 1. Open http://localhost:3000/pingpong in your browser, or
+#    You should see output similar to the following:
+#
+#    PONG: 0
+#
+# 2. Open http://localhost:4000/ in your browser, or
+#    You should see output similar to the following:
+#
+#   2026-11-25T19:59:41.472Z: 6dee6d6d-04bc-4b87-932e-871deea9e36e
+#   Ping / Pongs: 42
 ```
 
 ---
@@ -44,6 +70,11 @@ To test this application, execute the following commands in your command-line.
 After completing the exercise, follow the instructions below to clean up the resources used.
 
 ```bash
+cd && cd devops-with-kubernetes/log-output
+chmod +x ./_cleanup.sh
+./_cleanup.sh
+
+cd && cd devops-with-kubernetes/pingpong
 chmod +x ./_cleanup.sh
 ./_cleanup.sh
 ```

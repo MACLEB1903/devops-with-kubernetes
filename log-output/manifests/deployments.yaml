@@ -11,9 +11,12 @@ spec:
       labels:
         app: log-output
     spec:
+      securityContext:
+        fsGroup: 1000
       volumes:
-        - name: log-output-volumes
-          emptyDir: {}
+        - name: shared-volume
+          persistentVolumeClaim:
+            claimName: log-output-pingpong-pvc
 
       containers:
         - name: log-generator
@@ -21,18 +24,18 @@ spec:
           imagePullPolicy: IfNotPresent
           workingDir: /files
           volumeMounts:
-            - name: log-output-volumes
+            - name: shared-volume
               mountPath: /files
 
         - name: log-reader
           image: log-reader:latest
           imagePullPolicy: IfNotPresent
+          workingDir: /files
+          volumeMounts:
+            - name: shared-volume
+              mountPath: /files
           env:
             - name: PORT
               value: "4000"
           ports:
             - containerPort: 4000
-          workingDir: /files
-          volumeMounts:
-            - name: log-output-volumes
-              mountPath: /files
